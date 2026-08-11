@@ -1,8 +1,0 @@
-.note-container {
-    break-inside: avoid;
-    background-color: white;
-    border: 1px solid black;
-    width: clamp(20rem, 200px, 30rem);
-    padding: 1rem;
-    border-radius: 7px;
-}

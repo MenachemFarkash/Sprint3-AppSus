@@ -1,1 +1,4 @@
- /* note index */
+/* note index */
+@import './cmps/NoteList.css';
+@import './cmps/NotePreview.css';
+@import './cmps/CreateNote.css';

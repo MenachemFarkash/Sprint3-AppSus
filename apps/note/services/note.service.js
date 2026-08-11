@@ -32,7 +32,7 @@ function remove(noteId) {
 }
 
 function save(note) {
-    // create (post) if no id, update (put) if it has one
+    return storageService.post(NOTE_KEY, note)
 }
 
 function getDefaultFilter(filterBy = { txt: '', type: '' }) {
@@ -52,6 +52,7 @@ function _createNotes() {
             title: utilService.makeLorem(3),
             bodyText: utilService.makeLorem(30),
             color: '#ffffff',
+            createAt: Date.now(),
         }
         notes.push(note)
     }
