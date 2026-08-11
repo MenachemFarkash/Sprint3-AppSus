@@ -1,0 +1,9 @@
+.note-list-container {
+    columns: 4 30rem;
+
+    grid-template-columns: repeat(auto-fit, 20rem);
+    justify-content: center;
+    column-gap: 0.8rem;
+    padding: 0.2rem;
+    background-color: rgb(255, 255, 241);
+}
