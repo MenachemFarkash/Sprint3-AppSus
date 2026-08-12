@@ -29,7 +29,7 @@ export function MailIndex() {
   }
 
   return (
-    <section className="mail-container">
+    <section className="mail-index">
       <MailFolderList />
       <div>
         <MailFilter />
