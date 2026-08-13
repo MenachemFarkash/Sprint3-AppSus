@@ -3,14 +3,20 @@
 }
 
 body {
+    width: 100vw;
+    height: 100vh;
+
     margin: 0;
+}
+
+.root, 
+.root-cmp {
+    height: 100%;
 }
 
 .root-cmp {
     display: flex;
     flex-direction: column;
-
-    height: 100vh;
 }
 
 .root-cmp section:first-of-type {
