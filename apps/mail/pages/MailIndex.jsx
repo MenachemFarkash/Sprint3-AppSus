@@ -42,9 +42,10 @@ export function MailIndex() {
     mailService
       .save(updatedMail)
       .then(() => {
-        setMails((prev) => {
-          prev.map(((mail) => (mail.id === mailId ? updatedMail : mail)))
-        })
+        setMails((prev) =>
+          prev.map((mail) =>
+            (mail.id === mailId ? updatedMail : mail)
+        ))
         // Should update user based on the actual operation
 // showErrorMsg()
       })
