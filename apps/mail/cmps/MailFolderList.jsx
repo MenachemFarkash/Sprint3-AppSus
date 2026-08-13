@@ -1,3 +1,3 @@
 export function MailFolderList() {
-  return <div>Mail folder</div>;
+  return <div>Mail folder</div>
 }

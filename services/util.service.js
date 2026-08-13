@@ -65,15 +65,15 @@ function getDayName(date, locale) {
     return date.toLocaleDateString(locale, { weekday: 'long' })
 }
 
-function getDayNumber(date, locale) {
+function getDayNumber(date) {
     date = new Date(date)
     return date.getDate()
 }
 
 function getMonthName(date) {
     date = new Date(date)
-    const monthNames = ["January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
     ]
     return monthNames[date.getMonth()]
 }
