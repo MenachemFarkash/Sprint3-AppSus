@@ -1,0 +1,56 @@
+#!/usr/bin/env node
+import { execSync } from 'child_process'
+
+function changedFiles() {
+    return execSync('git diff --cached --name-only --diff-filter=ACM')
+        .toString()
+        .split('\n')
+        .filter(f => /\.jsx?$/.test(f))
+}
+
+function changedLines(file) {
+    const diff = execSync(`git diff --cached -U0 -- "${file}"`).toString()
+    const lines = new Set()
+    let cur = 0
+    for (const line of diff.split('\n')) {
+        const hunk = line.match(/^@@ -\d+(?:,\d+)? \+(\d+)(?:,(\d+))?/)
+        if (hunk) {
+            cur = Number(hunk[1])
+            const count = hunk[2] === undefined ? 1 : Number(hunk[2])
+            for (let i = 0; i < count; i++) lines.add(cur + i)
+            continue
+        }
+    }
+    return lines
+}
+
+const files = changedFiles()
+if (files.length === 0) process.exit(0)
+
+let hasErrors = false
+for (const file of files) {
+    const touched = changedLines(file)
+    if (touched.size === 0) continue
+
+    let report
+    try {
+        execSync(`npx eslint --format json "${file}"`, { stdio: ['pipe', 'pipe', 'pipe'] })
+        continue
+    } catch (err) {
+        report = JSON.parse(err.stdout.toString())
+    }
+
+    for (const result of report) {
+        for (const msg of result.messages) {
+            if (touched.has(msg.line)) {
+                hasErrors = true
+                console.error(`${file}:${msg.line}:${msg.column}  ${msg.message}  (${msg.ruleId})`)
+            }
+        }
+    }
+}
+
+if (hasErrors) {
+    console.error('\nESLint errors on changed lines. Fix before committing.')
+    process.exit(1)
+}
