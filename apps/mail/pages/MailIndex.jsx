@@ -37,13 +37,13 @@ export function MailIndex() {
   // Update specific mail property (front & back), and re-render MailIndex accordingly
   function onUpdateMail(mailId, update) {
     const mail = mails.find((mail) => mail.id === mailId)
-    const updatedMail = { ...mail, update }
+    const updatedMail = { ...mail, ...update }
 
     mailService
       .save(updatedMail)
       .then(() => {
         setMails((prev) => {
-          prev.map((mail) => (mail.id === mailId ? updatedMail : mail))
+          prev.map(((mail) => (mail.id === mailId ? updatedMail : mail)))
         })
         // Should update user based on the actual operation
 // showErrorMsg()
