@@ -1,17 +1,23 @@
 import { mailService } from '../services/mail.service.js'
-import { showErrorMsg } from '../../../services/event-bus.service.js'
+import {
+  showErrorMsg,
+  showSuccessMsg,
+} from '../../../services/event-bus.service.js'
 
 import { MailFolderList } from '../cmps/MailFolderList.jsx'
 import { MailFilter } from '../cmps/MailFilter.jsx'
 import { MailList } from '../cmps/MailList.jsx'
 
 const { useState, useEffect } = React
+const { useParams } = ReactRouter
 
 export function MailIndex() {
-  const [mails, setMails] = useState(null)
-  const [selectedMail, setSelectedMail] = useState(null)
+  const { id: folderId } = useParams()
+  const [selectedFolder, setSelectedFolder] = useState(folderId)
 
-  const [selectedFolder, setSelectedFolder] = useState(null)
+  const [mails, setMails] = useState(null)
+
+
   const [filterBy, setFilterBy] = useState({})
 
   useEffect(() => {
@@ -28,12 +34,37 @@ export function MailIndex() {
       })
   }
 
+  // Update specific mail property (front & back), and re-render MailIndex accordingly
+  function onUpdateMail(mailId, update) {
+    const mail = mails.find((mail) => mail.id === mailId)
+    const updatedMail = { ...mail, ...update }
+
+    mailService
+      .save(updatedMail)
+      .then(() => {
+        setMails((prev) =>
+          prev.map((mail) =>
+            (mail.id === mailId ? updatedMail : mail)
+        ))
+        // Should update user based on the actual operation
+// showErrorMsg()
+      })
+      .catch((err) => {
+        console.log(err)
+        showErrorMsg(`Could update mail ${mailId}`)
+      })
+  }
+
+
   return (
     <section className="mail-index">
       <MailFolderList />
-      <div>
+      <div className="mails-section">
         <MailFilter />
-        <MailList />
+        <MailList
+          mails={mails}
+          onUpdateMail={onUpdateMail}
+        />
       </div>
     </section>
   )
