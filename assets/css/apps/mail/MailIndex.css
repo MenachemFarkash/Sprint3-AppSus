@@ -6,3 +6,8 @@
 .mail-index.menu-open {
     grid-template-columns: 16em 1fr;
 }
+
+.mails-section {
+    display: grid;
+    grid-template-rows: max-content 1fr;
+}
