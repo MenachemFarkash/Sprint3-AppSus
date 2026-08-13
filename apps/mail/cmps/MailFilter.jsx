@@ -1,3 +1,3 @@
 export function MailFilter() {
-  return <div>Mail filter</div>;
+  return <div>Mail filter</div>
 }

@@ -14,12 +14,14 @@ export default [
             globals: {
                 ...globals.browser,
                 React: 'readonly',
+                ReactRouter: 'readonly',
                 ReactRouterDOM: 'readonly'
             }
         },
         rules: {
             quotes: ['error', 'single'],
-            semi: ['error', 'never']
+            semi: ['error', 'never'],
+            'no-unused-vars': 'warn'
         }
     }
 ]
