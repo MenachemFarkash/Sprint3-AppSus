@@ -1,13 +1,17 @@
 .mail-index {
     display: grid;
-    grid-template-columns: 4.5em 1fr;
+    grid-template-columns: max-content 1fr;
+
+    background-color: var(--clr-bg-main);
+}
+
+.mail-index > *:nth-child(2) {
+    height: 98%;
+
+    border-radius: var(--radius-panel);
+    background-color: var(--clr-white);
 }
 
 .mail-index.menu-open {
     grid-template-columns: 16em 1fr;
-}
-
-.mails-section {
-    display: grid;
-    grid-template-rows: max-content 1fr;
 }
