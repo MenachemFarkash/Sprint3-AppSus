@@ -1,3 +1,4 @@
+/* Display */
 .flex {
     display: flex;
 }
@@ -20,4 +21,70 @@
 
 .grid {
     display: grid;
+}
+
+/* Text */
+.meta-txt {
+    color: var(--clr-meta);
+}
+
+.small-txt {
+    font-size: .75em;
+}
+
+.bold-txt {
+    font-weight: bold;
+}
+
+/* Button */
+button:disabled,
+.btn:disabled { 
+    cursor: default;
+}
+
+button.lrg,
+.btn.lrg {
+    width: 2.5rem;
+    height: 2.5rem;
+
+    font-size: 1.1em;
+}
+
+.round-btn::before {
+    content: "";
+    z-index: -1;
+    position: absolute;
+    display: block;
+    
+    top: 50%;
+    left: 50%;
+
+    height: 2em;
+    width: 2em;
+    
+    border-radius: 50%;
+    background-color: var(--clr-overlay-hover);
+
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform var(--duration-quick) var(--ease-standard);
+}
+
+.round-btn:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.btn-nav:hover {
+    color: var(--clr-1);
+}
+
+.btn-mail:hover {
+    color: var(--clr-2);
+}
+
+.btn-delete:hover {
+    color: var(--clr-3);
+}
+
+.btn-note:hover {
+    color: var(--clr-4);
 }
