@@ -4,6 +4,7 @@ export const utilService = {
     getRandomIntInclusive,
     getRandomColor,
     padNum,
+    getFullDate,
     getDayName,
     getDayNumber,
     getMonthName,
@@ -60,6 +61,19 @@ function getRandomColor() {
     return color
 }
 
+function getFullDate(date) {
+    date = new Date(date)
+    return date.toLocaleString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false,
+    })
+}
+
 function getDayName(date, locale) {
     date = new Date(date)
     return date.toLocaleDateString(locale, { weekday: 'long' })
@@ -70,10 +84,17 @@ function getDayNumber(date) {
     return date.getDate()
 }
 
-function getMonthName(date) {
+function getMonthName(date, isFullName) {
     date = new Date(date)
-    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+    
+    const longMonthNames = ['January', 'February', 'March', 'April', 'May', 'June',
         'July', 'August', 'September', 'October', 'November', 'December'
     ]
-    return monthNames[date.getMonth()]
+    const shortMonthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ]
+
+    if (isFullName) return longMonthNames[date.getMonth()]
+    return shortMonthNames[date.getMonth()]
+    
 }
