@@ -1,0 +1,197 @@
+.folders-nav {
+    --duration-expand: .3s;
+    --delay-expand: .5s;
+    --duration-shadow: .08s;
+    --compose-size: 3.5em;
+    --icon-size: 2em;
+
+    display: grid;
+    grid-template-rows: 5em 1fr;
+
+    width: 4.5em;
+
+    overflow: hidden;
+    transition: width var(--duration-expand) ease;
+}
+
+.folders-nav:hover {
+    width: 16em;
+    transition: width var(--duration-expand) ease var(--delay-expand);
+
+    .folder.unread::after {
+        opacity: 0;
+        transition: opacity 0s step-end var(--delay-expand);
+    }
+
+    .folder::before {
+        content: none;
+    }
+
+    .folder-txt {
+        visibility: visible;
+        transition: visibility 0s step-end var(--delay-expand);
+    }
+
+    .folders-list>a::before {
+        visibility: visible;
+    }
+
+    .folders-list>a:hover:not(:has(.selected))::before,
+    .folders-list>a:has(.selected)::before {
+        width: 15em;
+    }
+
+    .folders-list>a:has(.selected)::before {
+        transition:
+            visibility 0s step-end var(--delay-expand),
+            width 0s ease .1s
+        ;
+    }
+
+    .compose-area {
+        width: 7.5em;
+        transition:
+            box-shadow var(--duration-shadow) linear,
+            width var(--duration-expand) ease var(--delay-expand)
+        ;
+    }
+}
+
+.compose-area {
+    align-self: center;
+
+    display: flex;
+    align-items: center;
+    gap: .7em;
+
+    width: var(--compose-size);
+    height: var(--compose-size);
+    overflow: hidden;
+
+    margin-inline-start: .5em;
+    border-radius: 16px;
+    background-color: var(--clr-bg-compose);
+
+    transition:
+        box-shadow var(--duration-shadow) linear,
+        width var(--duration-expand) ease
+    ;
+}
+
+.compose-area:hover {
+    box-shadow:
+        0 1px 3px 0 var(--clr-shadow-main),
+        0 4px 8px 3px var(--clr-shadow--1)
+    ;
+}
+
+.compose {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: var(--compose-size);
+
+    padding-inline-start: 1.2em;
+}
+
+.compose > i {
+    font-size: 1.2em;
+}
+
+.folders-list {
+    display: grid;
+    align-content: start;
+}
+
+.folders-list>a {
+    position: relative;
+    z-index: 0;
+
+    display: grid;
+    grid-template-columns: repeat(2, max-content) 1fr;
+    justify-content: start;
+    align-items: center;
+    gap: .5em;
+
+    width: 100%;
+
+    padding-inline: 1.3em;
+}
+
+.folders-list>a::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+
+    display: block;
+
+    height: var(--icon-size);
+    width: 0;
+    left: 0;
+
+    border-radius: 0 15px 15px 0;
+    background-color: var(--clr-overlay-hover);
+
+    visibility: hidden;
+    transition: visibility 0s step-end var(--delay-expand);
+}
+
+.folders-list>a:has(.selected)::before {
+    background-color: var(--clr-bg-selected);
+
+    transition:
+        visibility 0s step-end,
+        width var(--duration-expand) ease
+    ;
+}
+
+.folder {
+    height: var(--icon-size);
+    width: var(--icon-size);
+}
+
+.folder::before {
+    transition:
+        transform var(--duration-quick) var(--ease-standard),
+        content 0s step-end var(--delay-expand) allow-discrete
+    ;
+}
+
+.folder.selected::before {
+    background-color: var(--clr-bg-selected);
+
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.folder.unread::after {
+    content: "";
+    position: absolute;
+
+    display: block;
+    opacity: 1;
+
+    top: 10%;
+    right: 10%;
+
+    border-radius: 50%;
+    padding: .25em;
+    background-color: var(--clr-3);
+
+    transition: opacity 0s step-end;
+}
+
+.folder-txt {
+    visibility: hidden;
+
+    justify-self: end;
+
+    font-size: var(--fs-secondary);
+
+    transition: visibility 0s step-end;
+}
+
+.folder.unread ~ .folder-txt,
+.folder.selected ~ .folder-txt {
+    font-weight: 500;
+}
