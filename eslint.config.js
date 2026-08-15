@@ -20,8 +20,16 @@ export default [
         },
         rules: {
             quotes: ['error', 'single'],
+            'jsx-quotes': ['error', 'prefer-double'],
             semi: ['error', 'never'],
-            'no-unused-vars': 'warn'
+            'no-unused-vars': 'warn',
+            'no-restricted-imports': ['error', {
+                paths: [
+                    { name: 'react', message: 'Use \'const { useX } = React\' instead of importing from react.' },
+                    { name: 'react-router', message: 'Use \'const { useX } = ReactRouter\' instead of importing from react-router.' },
+                    { name: 'react-router-dom', message: 'Use \'const { X } = ReactRouterDOM\' instead of importing from react-router-dom.' }
+                ]
+            }]
         }
     }
 ]

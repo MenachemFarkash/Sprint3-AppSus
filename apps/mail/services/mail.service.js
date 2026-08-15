@@ -17,8 +17,6 @@ export const mailService = {
     getEmptyMail,
 }
 
-window.cs = mailService
-
 function query(filterBy = {}) {
     const {from, to, isRead, isStarred, labels, createdBetween, sentBetween, removedBetween, subject, body, txt} = filterBy
     
