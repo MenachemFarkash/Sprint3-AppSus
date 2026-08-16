@@ -38,15 +38,13 @@
     align-items: start;
 }
 
-.user-avatar {
+.sender-avatar {
     grid-column: 1;
     align-self: center;
     justify-self: center;
 
     width: 2.5rem;
-    height: auto;
-
-    border-radius: 15px;
+    height: 2.5rem;
 }
 
 .mail-body {

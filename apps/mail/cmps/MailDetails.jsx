@@ -1,11 +1,13 @@
 import { Loader } from '../../../cmps/Loader.jsx'
+import { UserAvatar } from '../../../cmps/UserAvatar.jsx'
 import { showErrorMsg, showSuccessMsg } from '../../../services/event-bus.service.js'
 import { utilService } from '../../../services/util.service.js'
 import { mailService } from '../services/mail.service.js'
+import { LOGGED_USER_EMAIL, LOGGED_USER_COLOR } from '../../../services/user.service.js'
 
 const { useState, useEffect } = React
 const { useParams } = ReactRouter
-const { useNavigate, Link } = ReactRouterDOM
+const { useNavigate } = ReactRouterDOM
 
 export function MailDetails({ onUpdateMail, onDeleteMail }) {
   
@@ -16,7 +18,12 @@ export function MailDetails({ onUpdateMail, onDeleteMail }) {
   
   useEffect(() => {
     mailService.get(mailId)
-    .then(setMail)
+    .then(mail => {
+      setMail(mail)
+      if (!mail.isRead && folderType !== 'sent' && folderType !== 'draft') {
+        onUpdateMail(mailId, { isRead: true })
+      }
+    })
     .catch((err) => {
       console.log(err)
       showErrorMsg(`Failed to load mail ${mailId}`)
@@ -32,10 +39,8 @@ export function MailDetails({ onUpdateMail, onDeleteMail }) {
     onDeleteMail(id).then(onReturnToFolder)
   }
 
-  // TODO: Move to notes page, and send object with needed property values to note creation 
-  function onSaveAsNote() {
-
-  }
+  // TODO: Notes integration - Move to notes page, and send object with needed property values to note creation 
+  function onSaveAsNote() {}
 
   function onMarkUnread() {
     onUpdateMail(id, {isRead: false})
@@ -49,18 +54,25 @@ export function MailDetails({ onUpdateMail, onDeleteMail }) {
         })
   }
 
-    function renderNavButton(id, iconClass, isFirst) {
+    function onNavToMail(targetMailId) {
+    onUpdateMail(targetMailId, { isRead: true })
+      .catch(err => console.log(err))
+    navigate(`/mail/folder/${folderType}/${targetMailId}`)
+  }
+
+  function renderNavButton(id, iconClass, isFirst) {
     const icon = <i className={`fa-solid ${iconClass}`}></i>
-    const className = isFirst ? 'mail-nav first' : 'mail-nav' 
-    
+    const className = isFirst ? 'mail-nav first' : 'mail-nav'
+
     return id
-      ? <Link className={className} to={`/mail/folder/${folderType}/${id}`}><button className="round-btn lrg btn-nav">{icon}</button></Link>
+      ? <button className={`round-btn lrg btn-nav ${className}`} onClick={() => onNavToMail(id)}>{icon}</button>
       : <button className={`round-btn lrg ${className}`} disabled>{icon}</button>
   }
 
   if (!mail) return <Loader />
 
-  const { body, from, id, name, nextMailId, prevMailId, sentAt, subject, to } = mail
+  const { body, color, from, id, name, nextMailId, prevMailId, sentAt, subject, to } = mail
+  const userBgColor = from === LOGGED_USER_EMAIL ? LOGGED_USER_COLOR : color
 
   return <div className="mail-details">
     <div className="mail-options">
@@ -75,12 +87,10 @@ export function MailDetails({ onUpdateMail, onDeleteMail }) {
     <div className="mail-content">
       <p className="mail-subject">{subject}</p>
       <div className="mail-meta">
-        {/* TODO: Should use a db for users. Then, I will be able to use user's avatar */}
-        <img
-          className="user-avatar"
-          src="assets/img/avatar.png"
-          alt="user-avatar"
-          onError={(ev) => (ev.target.src = 'assets/img/avatar.png')}
+        <UserAvatar
+          className="sender-avatar"
+          fullname={name}
+          color={userBgColor}
         />
         <div className="participants-details">
           <p>
