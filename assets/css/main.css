@@ -2,11 +2,17 @@
 @import './basics/base.css';
 @import './basics/helpers.css';
 @import './basics/layout.css';
+@import './basics/typography.css';
 
 @import './cmps/home.css';
+@import './cmps/Loader.css';
 @import './cmps/UserMsg.css';
 @import './cmps/AppHeader.css';
+@import './cmps/FoldersNav.css';
 
 @import './apps/note/NoteIndex.css';
+
+@import './apps/mail/MailDetails.css';
 @import './apps/mail/MailIndex.css';
 @import './apps/mail/MailList.css';
+@import './apps/mail/MailPreview.css';

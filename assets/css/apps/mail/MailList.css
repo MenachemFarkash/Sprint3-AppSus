@@ -1,1 +1,35 @@
- /* mail list */
+.mail-list {
+    display: grid;
+    grid-template-columns: 3em 9em 1fr 4.5em max-content;
+    align-content: start;
+}
+
+.mail-list > li {
+    grid-column: 1 / -1;
+    
+    display: grid;
+    grid-template-columns: subgrid;
+    align-items: center;
+
+    height: 2.5em;
+    padding-inline-end: 1em;
+}
+
+.mail-list > li:first-of-type {
+    height: 3em;
+
+    border-radius: var(--radius-panel) var(--radius-panel) 0 0;
+}
+
+.mail-list > li > *:last-child {
+    justify-self: start;
+}
+
+.mail-sort {
+    box-shadow: inset 0 -2px 0 0 var(--clr-shadow--2);
+}
+
+.mail-sort > :last-child,
+.received-at {
+    grid-column: 5;
+}

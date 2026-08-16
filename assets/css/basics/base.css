@@ -3,7 +3,26 @@
 }
 
 body {
+    width: 100vw;
+    height: 100vh;
+
     margin: 0;
+
+    font-family: GoogleSans, Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+}
+
+.root, 
+.root-cmp {
+    height: 100%;
+}
+
+.root-cmp {
+    display: flex;
+    flex-direction: column;
+}
+
+.root-cmp section:first-of-type {
+    flex: 1;
 }
 
 h1,
@@ -20,8 +39,35 @@ a {
     color: inherit;
 }
 
+p {
+    margin-block: 0;
+}
+
 img {
     height: 100%;
     width: 100%;
     object-fit: cover;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+button,
+.btn {
+    position: relative;
+    z-index: 1;
+
+    border: none;
+    padding: 0;
+    background-color: transparent;
+    
+    font-size: 1em;
+
+    cursor: pointer;
 }

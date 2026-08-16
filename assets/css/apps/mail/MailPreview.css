@@ -1,0 +1,68 @@
+.mail-preview {
+    position: relative;
+
+    background-color: var(--clr-white);
+    box-shadow: inset 0 -1px 0 0 var(--clr-shadow-1);
+
+    font-size: var(--fs-secondary);
+
+    cursor: pointer;
+    list-style: none;
+}
+
+.mail-preview.read {
+    background-color: var(--clr-bg--1);
+}
+
+.mail-preview:hover {
+    z-index: 2;
+
+    box-shadow:
+        inset 1px 0 0 var(--clr-border-hover),
+        inset -1px 0 0 var(--clr-border-hover),
+        0 1px 2px 0 var(--clr-shadow-main),
+        0 1px 3px 1px var(--clr-shadow--1)
+    ;
+
+    .btn-star {
+        opacity: 1;
+    }
+
+    .received-at {
+        display: none;
+    }
+
+    .hover-actions {
+        display: flex;
+    }
+}
+
+.btn-star {
+    opacity: .32;
+}
+
+.btn-star.marked {
+    color: var(--clr-4);
+    opacity: .7;
+}
+
+.sender-name {
+    padding-inline-end: .5em;
+}
+
+.mail-intro {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.hover-actions {
+    position: absolute;
+    
+    display: none;
+    
+    right: 1em;
+    top: 50%;
+    
+    transform: translateY(-50%);
+}
