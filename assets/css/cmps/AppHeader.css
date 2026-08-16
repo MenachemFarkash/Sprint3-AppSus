@@ -1,16 +1,50 @@
 .app-header {
-    display: flex;
-    justify-content: space-between;
-    padding: 1em;
+    display: grid;
+    grid-template-columns: 3.5em max-content 1fr 3em 3em;
+    align-items: center;
+
+    padding: .5em;
     background: var(--clr-bg-main);
+}
+
+.app-header *::before {
+    height: 2.5em;
+    width: 2.5em;
+}
+
+.folder-nav-toggle {
+    grid-column: 1;
+
+    display: flex;
+    flex-direction: row;
+
+}
+
+.folder-nav-toggle {
+    margin-inline: .25em;
+    padding: .75em;
 }
 
 nav a {
     margin: .5em;
 }
 
+.app-logo {
+    padding-inline-end: 5.3em;
+}
+
 nav a.active {
     color: var(--clr-1);
     font-weight: bold;
     text-decoration: overline;
+}
+
+.user-avatar-btn {
+    justify-self: center;
+
+    height: 2em;
+    width: 2em;
+
+    border-radius: 50%;
+    border: 1px solid black
 }

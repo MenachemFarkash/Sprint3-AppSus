@@ -1,3 +1,6 @@
+import { eventBusService } from '../services/event-bus.service.js'
+
+const { useState, useEffect } = React
 const { useParams } = ReactRouter
 const { Link } = ReactRouterDOM
 
@@ -13,6 +16,11 @@ const ICON_CLASSES= {
 
 export function FoldersNav({ app, folders, unreadCounts = {} }) {
   const { type: folderType } = useParams()
+  const [isNavOpen, setIsNavOpen] = useState(false)
+
+  useEffect(() => {
+    return eventBusService.on('toggle-folder-nav', () => setIsNavOpen(prev => !prev))
+  }, [])
 
   function renderFolders() {
     return folders.map(folderName => {
@@ -33,7 +41,7 @@ export function FoldersNav({ app, folders, unreadCounts = {} }) {
   }
 
   return (
-    <div className="folders-nav">
+    <div className={`folders-nav ${isNavOpen ? 'selected' : ''}`}>
       {app === 'mail' &&
         <button className="compose-area">
           <div className="compose"><i className="fa-solid fa-pencil"></i></div>

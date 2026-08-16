@@ -8,7 +8,10 @@
 @import './cmps/home.css';
 @import './cmps/Loader.css';
 @import './cmps/UserMsg.css';
+@import './cmps/UserAvatar.css';
 @import './cmps/AppHeader.css';
+@import './cmps/FilterSection.css';
+@import './cmps/AppMenu.css';
 @import './cmps/FoldersNav.css';
 
 @import './apps/note/NoteIndex.css';
