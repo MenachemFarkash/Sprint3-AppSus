@@ -1,15 +1,10 @@
 import { utilService } from '../../../services/util.service.js'
 import { storageService } from '../../../services/async-storage.service.js'
-
-const loggedUser = {
-    email: 'user@appsus.com',
-    fullname: 'Mahatma Appsus'
-}
+import { LOGGED_USER_EMAIL } from '../../../services/user.service.js'
 
 const MAIL_KEY = 'mailDB'
 _createMails()
 
-export const LOGGED_USER_EMAIL = loggedUser.email
 export const FOLDER_TYPES = ['inbox', 'starred', 'sent', 'draft', 'trash']
 
 export const mailService = {
@@ -105,7 +100,7 @@ function getEmptyMail() {
     return {
         body: '',
         createdAt: Date.now(),
-        from: loggedUser.email,
+        from: LOGGED_USER_EMAIL,
         isRead: false,
         isStarred: false,
         labels: [],
@@ -125,6 +120,7 @@ function _createMails() {
         {
             id: utilService.makeId(),
             body: 'Would love to catch up sometimes',
+            color: utilService.getRandomColor(),
             createdAt: 1551133930500,
             from: 'momo@momo.com',
             isRead: false,
@@ -140,6 +136,7 @@ function _createMails() {
         {
             id: utilService.makeId(),
             body: 'Reminder: standup moved to 9:30am tomorrow.',
+            color: utilService.getRandomColor(),
             createdAt: 1551220330500,
             from: 'boss@work.com',
             isRead: true,
@@ -154,6 +151,7 @@ function _createMails() {
         {
             id: utilService.makeId(),
             body: 'Your invoice #4521 has been paid. Thanks!',
+            color: utilService.getRandomColor(),
             createdAt: 1551306730500,
             from: 'billing@shopify.com',
             isRead: true,
@@ -168,6 +166,7 @@ function _createMails() {
         {
             id: utilService.makeId(),
             body: 'Happy birthday! Hope you have an amazing day.',
+            color: utilService.getRandomColor(),
             createdAt: 1551393130500,
             from: 'dana@friends.com',
             isRead: false,
@@ -182,6 +181,7 @@ function _createMails() {
         {
             id: utilService.makeId(),
             body: 'Your flight to Berlin is confirmed for March 20th.',
+            color: utilService.getRandomColor(),
             createdAt: 1551479530500,
             from: 'noreply@airlines.com',
             isRead: true,
@@ -196,6 +196,7 @@ function _createMails() {
         {
             id: utilService.makeId(),
             body: 'Can you review the PR when you get a chance?',
+            color: utilService.getRandomColor(),
             createdAt: 1551565930500,
             from: 'yossi@work.com',
             isRead: false,
@@ -210,6 +211,7 @@ function _createMails() {
         {
             id: utilService.makeId(),
             body: '50% off everything this weekend only!',
+            color: utilService.getRandomColor(),
             createdAt: 1551652330500,
             from: 'deals@store.com',
             isRead: true,
@@ -224,6 +226,7 @@ function _createMails() {
         {
             id: utilService.makeId(),
             body: 'Verify your new password to complete the reset.',
+            color: utilService.getRandomColor(),
             createdAt: 1551738730500,
             from: 'security@appsus.com',
             isRead: false,
@@ -238,6 +241,7 @@ function _createMails() {
         {
             id: utilService.makeId(),
             body: 'Dinner Friday at 8? Let me know.',
+            color: utilService.getRandomColor(),
             createdAt: 1551825130500,
             from: 'ronit@friends.com',
             isRead: true,
@@ -252,6 +256,7 @@ function _createMails() {
         {
             id: utilService.makeId(),
             body: 'Your monthly statement is now available.',
+            color: utilService.getRandomColor(),
             createdAt: 1551911530500,
             from: 'statements@bank.com',
             isRead: false,

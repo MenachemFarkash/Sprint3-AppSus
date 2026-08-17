@@ -1,4 +1,4 @@
-import { LOGGED_USER_EMAIL } from '../services/mail.service.js'
+import { LOGGED_USER_EMAIL } from '../../../services/user.service.js'
 
 export function useUnreadCounts(mails) {
   if (!mails) return {}

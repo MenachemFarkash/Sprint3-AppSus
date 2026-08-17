@@ -8,6 +8,7 @@ export const utilService = {
     getDayName,
     getDayNumber,
     getMonthName,
+    getReadableDate,
     loadFromStorage,
     saveToStorage,
 }
@@ -115,6 +116,29 @@ function getDayName(date, locale) {
 function getDayNumber(date) {
     date = new Date(date)
     return date.getDate()
+}
+
+function getReadableDate(date) {
+    const now = new Date()
+    const isFromLastDay = now - new Date(date) < 24 * 60 * 60 * 1000
+    const isFromStartOfMonth =
+        new Date(date).getMonth() === now.getMonth() &&
+        new Date(date).getFullYear() === now.getFullYear()
+
+    if (isFromLastDay) {
+        return new Date(date).toLocaleTimeString('en-GB', {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false,
+        })
+    }
+    if (isFromStartOfMonth) {
+        return new Date(date).toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+        })
+    }
+    return new Date(date).toLocaleDateString('en-GB')
 }
 
 function getMonthName(date, isFullName) {

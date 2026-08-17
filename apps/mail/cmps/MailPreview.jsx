@@ -51,7 +51,7 @@ export function MailPreview({ mail, onUpdateMail, onDeleteMail }) {
         <span> - </span>
         <span className="meta-txt">{body}</span>
       </p>
-      <p className="received-at">{getReadableDate(createdAt)}</p>
+      <p className="received-at">{utilService.getReadableDate(createdAt)}</p>
       <div className="hover-actions">
         <button className="round-btn lrg btn-mail" onClick={handleToggleIsRead}>
           <i className={`fa-regular ${isRead ? 'fa-envelope' : 'fa-envelope-open'}`}></i>
@@ -65,11 +65,4 @@ export function MailPreview({ mail, onUpdateMail, onDeleteMail }) {
       </div>
     </li>
   )
-}
-
-function getReadableDate(date) {
-  const month = utilService.getMonthName(date, false)
-  const day = utilService.getDayNumber(date)
-
-  return `${month} ${day}`
 }

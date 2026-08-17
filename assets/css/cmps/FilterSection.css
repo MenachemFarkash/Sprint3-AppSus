@@ -1,0 +1,36 @@
+.filter-section {
+    grid-column: 3;
+    justify-self: start;
+
+    display: grid;
+    grid-template-columns: max-content 1fr max-content;
+    align-items: center;
+    justify-content: start;
+
+    height: 3em;
+    width: 45em;
+
+    padding-inline: .4em;
+
+    border-radius: 24px;
+    background-color: rgb(234, 234, 244);
+}
+
+.search-button {
+    height: 2.5em;
+    width: 2.5em;
+}
+
+.search-icon,
+.filter-icon {
+    height: 1.5em;
+    width: 1.5em;
+}
+
+.text-filter {
+    border: none;
+    outline: none;
+    background-color: transparent;
+
+    font-size: 1rem;
+}
