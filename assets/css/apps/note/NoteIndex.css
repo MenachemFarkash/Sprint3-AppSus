@@ -1,4 +1,4 @@
-/* note index */
-@import './cmps/NoteList.css';
-@import './cmps/NotePreview.css';
-@import './cmps/CreateNote.css';
+.note-index {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+}

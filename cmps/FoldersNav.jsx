@@ -7,7 +7,13 @@ const ICON_CLASSES= {
   sent: 'fa-regular fa-paper-plane',
   draft: 'fa-regular fa-file',
   trash: 'fa-regular fa-trash-can',
-}
+
+  // notes icons
+  notes: 'fa-solid fa-inbox',
+  reminders: 'fa-regular fa-star',
+  editLabels: 'fa-regular fa-paper-plane',
+  archive: 'fa-regular fa-file',
+  }
 
 // TODO: Click on compose should trigger a new mail creation
 

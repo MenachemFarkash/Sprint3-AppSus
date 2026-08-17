@@ -112,25 +112,6 @@ function getDayName(date, locale) {
     return date.toLocaleDateString(locale, { weekday: 'long' })
 }
 
-<<<<<<< HEAD
-function getMonthName(date) {
-    const monthNames = [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December',
-    ]
-    return monthNames[date.getMonth()]
-}
-=======
 function getDayNumber(date) {
     date = new Date(date)
     return date.getDate()
@@ -150,4 +131,3 @@ function getMonthName(date, isFullName) {
     return shortMonthNames[date.getMonth()]
     
 }
->>>>>>> d2834524afddbc095be64a03b52933320c1d7ea6
