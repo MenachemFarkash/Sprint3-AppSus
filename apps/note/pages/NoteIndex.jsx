@@ -26,6 +26,7 @@ export function NoteIndex() {
     return (
         <section className="note-index">
             <FoldersNav app="note" folders={FOLDER_TYPES}/>
+            
             <div className="notes-container">
                 <CreateNote createNote={createNote} />
                 <NoteList notes={notes} />

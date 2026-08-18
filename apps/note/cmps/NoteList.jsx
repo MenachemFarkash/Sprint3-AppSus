@@ -1,4 +1,4 @@
-import { NotePreview } from "./NotePreview.jsx"
+import { NotePreview } from './NotePreview.jsx'
 
 export function NoteList({ notes }) {
     return (
@@ -8,6 +8,7 @@ export function NoteList({ notes }) {
                     <NotePreview
                         id={note.id}
                         title={note.title}
+                        color={note.color}
                         bodyText={note.bodyText}
                         key={note.id}
                     />
