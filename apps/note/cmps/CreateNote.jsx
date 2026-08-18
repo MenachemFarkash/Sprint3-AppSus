@@ -25,10 +25,22 @@ export function CreateNote({ createNote }) {
         console.log(newNote.color)
     }
 
+    function handleFormBlur(ev) {
+        if (!ev.currentTarget.contains(ev.relatedTarget)) {
+            setIsFocused(false)
+            setIsColorPickerOpen(false)
+
+            if(newNote.title === '' && newNote.bodyText === '') return
+            onCreateNote(ev)
+        }
+    }
+
     return (
         <section className="create-note-container">
             <form
-                onSubmit={onCreateNote}
+                onBlur={(ev) => {
+                    handleFormBlur(ev)
+                }}
                 style={{ backgroundColor: `var(--${newNote.color})` }}
             >
                 {isFocused ? (

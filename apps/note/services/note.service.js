@@ -28,7 +28,7 @@ function get(noteId) {
 }
 
 function remove(noteId) {
-    // delete a note by id
+    storageService.remove(NOTE_KEY, noteId)
 }
 
 function save(note) {
