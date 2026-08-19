@@ -61,13 +61,12 @@ function _createNotes() {
 }
 
 function getEmptyNote() {
-    let emptyNote = {}
-    emptyNote = {
+   let emptyNote = {
         id: utilService.makeId(),
         type: 'text',
         title: '',
         bodyText: '',
-        color: '#ffffff',
+        color: 'white',
     }
 
     return emptyNote

@@ -1,5 +1,4 @@
 const { useState } = React
-import { utilService } from '../../../services/util.service.js'
 import { noteService } from '../services/note.service.js'
 
 export function CreateNote({ createNote }) {
@@ -13,6 +12,7 @@ export function CreateNote({ createNote }) {
         noteService.save(newNote).then((note) => {
             createNote(note)
         })
+        setNewNote(noteService.getEmptyNote())
     }
 
     function handleChange({ target }) {
@@ -41,6 +41,7 @@ export function CreateNote({ createNote }) {
                 onBlur={(ev) => {
                     handleFormBlur(ev)
                 }}
+                onSubmit={onCreateNote}
                 style={{ backgroundColor: `var(--${newNote.color})` }}
             >
                 {isFocused ? (
