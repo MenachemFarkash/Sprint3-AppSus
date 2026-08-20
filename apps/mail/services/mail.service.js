@@ -5,7 +5,13 @@ import { LOGGED_USER_EMAIL } from '../../../services/user.service.js'
 const MAIL_KEY = 'mailDB'
 _createMails()
 
-export const FOLDER_TYPES = ['inbox', 'starred', 'sent', 'draft', 'trash']
+export const FOLDER_TYPES = [
+    { name: 'inbox', icon: 'inbox.icon.svg' },
+    { name: 'starred', icon: 'starred.icon.svg' },
+    { name: 'sent', icon: 'sent.icon.svg' },
+    { name: 'draft', icon: 'draft.icon.svg' },
+    { name: 'trash', icon: 'trash.icon.svg' },
+]
 
 export const mailService = {
     query,

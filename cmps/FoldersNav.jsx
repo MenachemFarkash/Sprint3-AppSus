@@ -1,16 +1,8 @@
 import { eventBusService } from '../services/event-bus.service.js'
+import { FolderNavItem } from './FolderNavItem.jsx'
 
 const { useState, useEffect } = React
 const { useParams } = ReactRouter
-const { Link } = ReactRouterDOM
-
-const ICON_CLASSES= {
-  inbox: 'fa-solid fa-inbox',
-  starred: 'fa-regular fa-star',
-  sent: 'fa-regular fa-paper-plane',
-  draft: 'fa-regular fa-file',
-  trash: 'fa-regular fa-trash-can',
-}
 
 // TODO: Click on compose should trigger a new mail creation
 
@@ -22,24 +14,6 @@ export function FoldersNav({ app, folders, unreadCounts = {} }) {
     return eventBusService.on('toggle-folder-nav', () => setIsNavOpen(prev => !prev))
   }, [])
 
-  function renderFolders() {
-    return folders.map(folderName => {
-      const folderUnreadCount = unreadCounts[folderName] || 0
-      const hasUnread = folderUnreadCount > 0 ? 'unread' : ''
-      const isSelected = folderName === folderType ? 'selected' : ''
-
-      return (
-        <Link to={`/${app}/folder/${folderName}`} key={folderName}>
-          <button className={`round-btn folder ${hasUnread} ${isSelected}`}>
-            <i className={ICON_CLASSES[folderName]}></i>
-          </button>
-          <span className="folder-txt">{folderName}</span>
-          <span className="folder-txt">{folderUnreadCount}</span>
-        </Link>
-      )
-    })
-  }
-
   return (
     <div className={`folders-nav ${isNavOpen ? 'selected' : ''}`}>
       {app === 'mail' &&
@@ -50,7 +24,15 @@ export function FoldersNav({ app, folders, unreadCounts = {} }) {
       }
 
       <div className="folders-list">
-        {renderFolders()}
+        {folders.map(folder => (
+          <FolderNavItem
+            app={app}
+            folder={folder}
+            folderType={folderType}
+            unreadCount={unreadCounts[folder.name] || 0}
+            key={folder.name}
+          />
+        ))}
       </div>
     </div>
   )
