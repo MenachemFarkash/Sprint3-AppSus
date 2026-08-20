@@ -12,10 +12,10 @@ const ICON_CLASSES= {
   trash: 'fa-regular fa-trash-can',
 
   // notes icons
-  notes: 'fa-solid fa-inbox',
-  reminders: 'fa-regular fa-star',
-  editLabels: 'fa-regular fa-paper-plane',
-  archive: 'fa-regular fa-file',
+  notes: 'fa-regular fa-lightbulb',
+  reminders: 'fa-regular fa-bell',
+  'edit labels': 'fa-regular fa-pen-to-square',
+  archive: 'fa-regular fa-folder-open',
   }
 
 // TODO: Click on compose should trigger a new mail creation

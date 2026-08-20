@@ -30,7 +30,7 @@ export function CreateNote({ createNote }) {
             setIsFocused(false)
             setIsColorPickerOpen(false)
 
-            if(newNote.title === '' && newNote.bodyText === '') return
+            if (newNote.title === '' && newNote.bodyText === '') return
             onCreateNote(ev)
         }
     }
@@ -133,7 +133,7 @@ export function CreateNote({ createNote }) {
                         </div>
                     </div>
                 ) : (
-                    <div>
+                    <div className="create-note-fake-input-container">
                         <input
                             className="create-note-fake-input"
                             onClick={() => setIsFocused(true)}
@@ -141,6 +141,23 @@ export function CreateNote({ createNote }) {
                             onChange={handleChange}
                             value={newNote.bodyText}
                         />
+                        <div className="create-note-types-list">
+                            <span className="create-note-text round-btn">
+                                <i className="fa-regular fa-file-lines"></i>
+                            </span>
+                            <span className="create-note-image round-btn">
+                                <i className="fa-regular fa-image"></i>
+                            </span>
+                            <span className="create-note-video round-btn">
+                                <i className="fa-solid fa-film"></i>
+                            </span>
+                            <span className="create-note-voice round-btn">
+                                <i className="fa-solid fa-volume-high"></i>
+                            </span>
+                            <span className="create-note-todo round-btn">
+                                <i className="fa-solid fa-list-check"></i>
+                            </span>
+                        </div>
                     </div>
                 )}
             </form>

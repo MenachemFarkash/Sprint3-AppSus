@@ -43,16 +43,50 @@ function _createNotes() {
     let notes = utilService.loadFromStorage(NOTE_KEY)
     if (notes && notes.length > 0) return
 
+    const colors = [
+        'coral',
+        'peach',
+        'sand',
+        'mint',
+        'sage',
+        'fog',
+        'storm',
+        'dusk',
+        'blossom',
+        'clay',
+        'chalk',
+        'white',
+    ]
+
     notes = []
 
     for (let i = 0; i < 20; i++) {
         const note = {
             id: utilService.makeId(),
             type: 'text',
-            title: utilService.makeLorem(3),
-            bodyText: utilService.makeLorem(30),
-            color: '#ffffff',
-            createAt: Date.now(),
+            color: colors[utilService.getRandomIntInclusive(0, colors.length -1)],
+            createdAt: Date.now(),
+            isPinned: false,
+            elements: [
+                {
+                    type: 'h1',
+                    txt: `${utilService.makeLorem(5)}`,
+                    isBald: true,
+                    isItalic: false,
+                    isUnderline: false,
+                },
+                {
+                    type: 'p',
+                    txt: `${utilService.makeLorem(utilService.getRandomIntInclusive(5, 30))}`,
+                    isBald: false,
+                    isItalic: false,
+                    isUnderline: false,
+                },
+                {
+                    type: 'img',
+                    url: `https://picsum.photos/200/200/?${utilService.getRandomIntInclusive(0, 7384)}`,
+                },
+            ],
         }
         notes.push(note)
     }
@@ -61,12 +95,15 @@ function _createNotes() {
 }
 
 function getEmptyNote() {
-   let emptyNote = {
+    let emptyNote = {
         id: utilService.makeId(),
         type: 'text',
         title: '',
         bodyText: '',
         color: 'white',
+        createdAt: 1112222,
+        isPinned: false,
+        elements: [],
     }
 
     return emptyNote

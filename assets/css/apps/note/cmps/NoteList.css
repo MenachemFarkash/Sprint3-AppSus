@@ -1,6 +1,6 @@
 .note-list-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 240px);
-    gap: 16px;
-    padding: 20px;
+    column-width: 230px;
+    row-gap: 16px ;
+    padding: 1rem;
 }
+

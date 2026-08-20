@@ -11,6 +11,7 @@ export function NoteList({ notes }) {
                         color={note.color}
                         bodyText={note.bodyText}
                         key={note.id}
+                        note={note}
                     />
                 )
             })}
