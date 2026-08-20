@@ -43,7 +43,8 @@ export function MailPreview({ mail, onUpdateMail, onDeleteMail }) {
         className={`round-btn btn-star ${isStarred ? 'marked' : ''}`}
         onClick={handleToggleStar}
       >
-        <i className={isStarred ? 'fa-solid fa-star' : 'fa-regular fa-star'}></i>
+        <i className="fa-solid fa-star icon-star-solid"></i>
+        <i className="fa-regular fa-star icon-star-regular"></i>
       </button>
       <p className={`sender-name ${isRead ? '' : 'bold-txt'}`}>{name}</p>
       <p className="mail-intro">
@@ -53,8 +54,9 @@ export function MailPreview({ mail, onUpdateMail, onDeleteMail }) {
       </p>
       <p className="received-at">{utilService.getReadableDate(createdAt)}</p>
       <div className="hover-actions">
-        <button className="round-btn lrg btn-mail" onClick={handleToggleIsRead}>
-          <i className={`fa-regular ${isRead ? 'fa-envelope' : 'fa-envelope-open'}`}></i>
+        <button className={`round-btn lrg btn-mail ${isRead ? '' : 'unread'}`} onClick={handleToggleIsRead}>
+          <i className="fa-regular fa-envelope icon-envelope-closed"></i>
+          <i className="fa-regular fa-envelope-open icon-envelope-open"></i>
         </button>
         <button className="round-btn lrg btn-note" onClick={handleSaveAsNote}>
           <i className="fa-regular fa-lightbulb"></i>
