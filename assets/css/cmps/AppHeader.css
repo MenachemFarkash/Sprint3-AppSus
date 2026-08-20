@@ -3,6 +3,7 @@
     grid-template-columns: 3.5em max-content 1fr 3em 3em;
     align-items: center;
 
+    height: 4em;
     padding: .5em;
     background: var(--clr-bg-main);
 }
@@ -30,7 +31,25 @@ nav a {
 }
 
 .app-logo {
-    padding-inline-end: 5.3em;
+    grid-column: 2;
+
+    display: flex;
+    width: 8em;
+
+    padding-inline-end: clamp(0, 5vw, 5.3em);
+}
+
+.app-logo img {
+    width: 100%;
+}
+
+.filter-section {
+    grid-column: 3;
+}
+
+.app-menu {
+    grid-column: 4;
+    justify-self: center;
 }
 
 nav a.active {
@@ -40,6 +59,7 @@ nav a.active {
 }
 
 .user-avatar-btn {
+    grid-column: 5;
     justify-self: center;
 
     height: 2em;
