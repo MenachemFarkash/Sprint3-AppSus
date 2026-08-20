@@ -1,24 +1,117 @@
 .filter-section {
     grid-column: 3;
     justify-self: start;
+    position: relative;
 
+    width: 100%;
+    max-width: 45em;
+    min-width: 0;
+}
+
+.filter-bar {
     display: grid;
     grid-template-columns: max-content 1fr max-content;
     align-items: center;
     justify-content: start;
 
     height: 3em;
-    width: 45em;
+    width: 100%;
 
     padding-inline: .4em;
 
     border-radius: 24px;
-    background-color: rgb(234, 234, 244);
+    background-color: var(--clr-bg-search);
+}
+
+.filter-panel {
+    position: absolute;
+    z-index: 10;
+
+    display: grid;
+    grid-template-columns: minmax(4em, 8em) 1fr;
+    gap: .9em 1em;
+
+    top: calc(100% + .3em);
+    left: 0;
+    right: 0;
+
+    padding: 1.2em clamp(.6em, 4vw, 1.5em);
+
+    background-color: var(--clr-white);
+    border-radius: var(--radius-panel);
+    box-shadow:
+        0 1px 3px 0 var(--clr-shadow-main),
+        0 4px 8px 3px var(--clr-shadow--1)
+    ;
+}
+
+.filter-panel label {
+    color: var(--clr-meta);
+    font-size: var(--fs-secondary);
+}
+
+.filter-panel input,
+.filter-panel select {
+    border: none;
+    border-bottom: 1px solid var(--clr-border-hover);
+    outline: none;
+    padding-block: .3em;
+
+    background-color: transparent;
+    font-size: 1rem;
+}
+
+.filter-panel input:focus,
+.filter-panel select:focus {
+    border-bottom: 2px solid var(--clr-1);
+}
+
+.filter-panel-actions {
+    grid-column: 1 / -1;
+    justify-self: end;
+
+    display: flex;
+    align-items: center;
+    gap: 1.5em;
+}
+
+.clear-filter-btn {
+    border: none;
+    background-color: none;
+
+    color: var(--clr-meta);
+    font-size: 1rem;
+}
+
+.search-btn {
+    padding: .6em 1.5em;
+    border: none;
+    border-radius: 24px;
+
+    background-color: var(--clr-1);
+    color: var(--clr-white);
+    font-size: 1rem;
 }
 
 .search-button {
+    position: relative;
+
     height: 2.5em;
     width: 2.5em;
+}
+
+.search-button.has-filter::after {
+    content: "";
+    position: absolute;
+
+    display: block;
+
+    top: 10%;
+    right: 10%;
+
+    border-radius: 50%;
+    padding: .25em;
+    background-color: var(--clr-3);
 }
 
 .search-icon,
