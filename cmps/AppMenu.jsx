@@ -25,7 +25,7 @@ export function AppMenu() {
     return (
         <div className="app-menu">
             <button className="round-btn" onClick={toggleAppMenu}>
-                <img src="../assets/icons/app-menu.svg" alt="apps-menu"/>
+                <img src="../assets/icons/app-menu.icon.svg" alt="apps-menu"/>
             </button>
             <dialog ref={dialogRef} className="app-menu-popup" onClick={onBackdropClick}>
                 <nav>

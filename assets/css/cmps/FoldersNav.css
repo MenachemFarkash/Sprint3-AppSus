@@ -50,7 +50,7 @@
     }
 
     .compose-area {
-        width: 7.5em;
+        width: 8.3em;
         transition:
             box-shadow var(--duration-shadow) linear,
             width var(--duration-expand) ease var(--delay-expand)
@@ -152,8 +152,17 @@
 }
 
 .folder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     height: var(--icon-size);
     width: var(--icon-size);
+}
+
+.folder img {
+    height: 60%;
+    width: 60%;
 }
 
 .folder::before {
@@ -188,8 +197,9 @@
 
 .folder-txt {
     visibility: hidden;
-
     justify-self: end;
+
+    padding-inline-end: .8em;
 
     font-size: var(--fs-secondary);
 
