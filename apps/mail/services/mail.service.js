@@ -3,9 +3,43 @@ import { storageService } from '../../../services/async-storage.service.js'
 import { LOGGED_USER_EMAIL } from '../../../services/user.service.js'
 
 const MAIL_KEY = 'mailDB'
+const DAY_MS = 24 * 60 * 60 * 1000
+const DATE_WITHIN_OPTIONS = [
+    { value: '', label: 'Any time' },
+    { value: 1, label: '1 day' },
+    { value: 3, label: '3 days' },
+    { value: 7, label: '1 week' },
+    { value: 14, label: '2 weeks' },
+    { value: 30, label: '1 month' },
+    { value: 60, label: '2 months' },
+    { value: 90, label: '3 months' },
+    { value: 180, label: '6 months' },
+    { value: 365, label: '1 year' },
+]
+const SORT_BY_OPTIONS = [
+    { value: '', label: 'Default' },
+    { value: 'name_asc', label: 'Sender (A-Z)' },
+    { value: 'name_desc', label: 'Sender (Z-A)' },
+    { value: 'subject_asc', label: 'Subject (A-Z)' },
+    { value: 'subject_desc', label: 'Subject (Z-A)' },
+    { value: 'sentAt_asc', label: 'Date (oldest)' },
+    { value: 'sentAt_desc', label: 'Date (newest)' },
+]
+const SORT_COMPARATORS = {
+    name: (a, b) => a.name.localeCompare(b.name),
+    subject: (a, b) => a.subject.localeCompare(b.subject),
+    sentAt: (a, b) => (a.sentAt || 0) - (b.sentAt || 0),
+}
+
 _createMails()
 
-export const FOLDER_TYPES = ['inbox', 'starred', 'sent', 'draft', 'trash']
+export const FOLDER_TYPES = [
+    { name: 'inbox', icon: 'inbox.icon.svg' },
+    { name: 'starred', icon: 'starred.icon.svg' },
+    { name: 'sent', icon: 'sent.icon.svg' },
+    { name: 'draft', icon: 'draft.icon.svg' },
+    { name: 'trash', icon: 'trash.icon.svg' },
+]
 
 export const mailService = {
     query,
@@ -14,13 +48,20 @@ export const mailService = {
     save,
     getEmptyMail,
 }
+export const mailFilterFields = [
+    { name: 'from', label: 'From' },
+    { name: 'to', label: 'To' },
+    { name: 'subject', label: 'Subject' },
+    { name: 'sentBetween', label: 'Date within', type: 'select', options: DATE_WITHIN_OPTIONS },
+    { name: 'sortBy', label: 'Sort by', type: 'select', options: SORT_BY_OPTIONS },
+]
 
 function query(filterBy = {}) {
-    const {from, to, isRead, isStarred, labels, createdBetween, sentBetween, removedBetween, subject, body, txt} = filterBy
-    
+    const {from, to, sentBetween, subject, txt, folder, sortBy} = filterBy
+
     return storageService.query(MAIL_KEY)
         .then( mails => {
-            
+
             if (from) {
                 const regExp = new RegExp(from, 'i')
                 mails = mails.filter(({ from }) => regExp.test(from))
@@ -29,54 +70,33 @@ function query(filterBy = {}) {
                 const regExp = new RegExp(to, 'i')
                 mails = mails.filter(({ to }) => regExp.test(to))
             }
-            if (isRead) {
-                mails = mails.filter((mail) => mail.isRead === isRead)
-            }
-            if (isStarred) {
-                mails = mails.filter((mail) => mail.isStarred === isStarred)
-            }
-            if (labels && labels.length) {
-                mails = mails.filter(mail => 
-                    Array.isArray(mail.labels) && labels.every(label => mail.labels.includes(label))
-                )
-            }
-            if (createdBetween && (createdBetween.from || createdBetween.to)) {
-                const fromTime = createdBetween.from ? +createdBetween.from : -Infinity
-                const toTime = createdBetween.to ? +createdBetween.to : Infinity
-                
-                mails = mails.filter(({createdAt}) => {
-                    return typeof createdAt === 'number' && createdAt >= fromTime && createdAt <= toTime
-                })
-            }
-            if (sentBetween && (sentBetween.from || sentBetween.to)) {
-                const fromTime = sentBetween.from ? +sentBetween.from : -Infinity
-                const toTime = sentBetween.to ? +sentBetween.to : Infinity
-                
-                mails = mails.filter(({sentAt}) => {
-                    return typeof sentAt === 'number' && sentAt >= fromTime && sentAt <= toTime
-                })
-            }
-            if (removedBetween && (removedBetween.from || removedBetween.to)) {
-                const fromTime = removedBetween.from ? +removedBetween.from : -Infinity
-                const toTime = removedBetween.to ? +removedBetween.to : Infinity
+            if (sentBetween) {
+                const fromTime = Date.now() - (+sentBetween) * DAY_MS
 
-                mails = mails.filter(({removedAt}) => {
-                    return typeof removedAt === 'number' && removedAt >= fromTime && removedAt <= toTime
+                mails = mails.filter(({sentAt}) => {
+                    return typeof sentAt === 'number' && sentAt >= fromTime
                 })
             }
             if (subject) {
                 const regExp = new RegExp(subject, 'i')
                 mails = mails.filter(({subject}) => regExp.test(subject))
             }
-            if (body) {
-                const regExp = new RegExp(body, 'i')
-                mails = mails.filter(({body}) => regExp.test(body))
-            }
             if (txt) {
                 const regExp = new RegExp(txt, 'i')
                     mails = mails.filter( ({ subject, body }) =>
                         regExp.test(subject) || regExp.test(body)
                 )
+            }
+            if (folder) {
+                mails = mails.filter(mail => _isInFolder(mail, folder))
+            }
+            if (sortBy) {
+                const [field, dir] = sortBy.split('_')
+                const comparator = SORT_COMPARATORS[field]
+                if (comparator) {
+                    mails = [...mails].sort(comparator)
+                    if (dir === 'desc') mails.reverse()
+                }
             }
             return mails
         })
@@ -278,6 +298,19 @@ function _createMail() {
     const mail = getEmptyMail()
     mail.id = utilService.makeId()
     return mail
+}
+
+const folderCheckers = {
+    trash: mail => Boolean(mail.removedAt),
+    starred: mail => mail.isStarred && !mail.removedAt,
+    sent: mail => mail.from === LOGGED_USER_EMAIL && Boolean(mail.sentAt) && !mail.removedAt,
+    draft: mail => mail.from === LOGGED_USER_EMAIL && !mail.sentAt && !mail.removedAt,
+    inbox: mail => mail.to === LOGGED_USER_EMAIL && !mail.removedAt,
+}
+
+function _isInFolder(mail, folder) {
+    const checker = folderCheckers[folder]
+    return checker ? checker(mail) : true
 }
 
 function _setNextPrevMailId(mail) {

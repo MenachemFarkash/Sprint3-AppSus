@@ -4,14 +4,14 @@ export function useUnreadCounts(mails) {
   if (!mails) return {}
 
   return mails.reduce((counts, mail) => {
-    if (mail.isRead) return counts
+    if (!mail.removedAt && !mail.sentAt && mail.from !== LOGGED_USER_EMAIL) {
+      counts.draft++
+    }
 
-    if (mail.removedAt) counts.trash++
-    else {
-      if (mail.to === LOGGED_USER_EMAIL) counts.inbox++
-      if (mail.isStarred) counts.starred++
+    if (!mail.isRead && !mail.removedAt && mail.to === LOGGED_USER_EMAIL) {
+      counts.inbox++
     }
 
     return counts
-  }, { inbox: 0, starred: 0, sent: 0, draft: 0, trash: 0 })
+  }, { inbox: 0, draft: 0 })
 }

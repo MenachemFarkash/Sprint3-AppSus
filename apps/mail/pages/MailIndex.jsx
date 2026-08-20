@@ -1,4 +1,5 @@
 import { mailService, FOLDER_TYPES } from '../services/mail.service.js'
+import { utilService } from '../../../services/util.service.js'
 import {
   showErrorMsg,
   showSuccessMsg,
@@ -11,28 +12,39 @@ import { useUnreadCounts } from '../hooks/useUnreadCounts.js'
 
 const { useState, useEffect } = React
 const { useParams } = ReactRouter
+const { useSearchParams } = ReactRouterDOM
 
 export function MailIndex() {
   const { id: mailId, type: folderType } = useParams()
+  const [searchParams] = useSearchParams()
+  const filterBy = utilService.searchParamsToFilterBy(searchParams)
+
+  const [allMails, setAllMails] = useState(null)
+  const unreadCounts = useUnreadCounts(allMails)
 
   const [mails, setMails] = useState(null)
-  const unreadCounts = useUnreadCounts(mails)
 
-  // TODO: update filterBy based on folderType
-  const [filterBy, setFilterBy] = useState({})
+  useEffect(() => {
+    loadAllMails()
+  }, [])
 
   useEffect(() => {
     loadMails()
-  }, [filterBy])
+  }, [searchParams, folderType])
 
   function loadMails() {
     mailService
-      .query(filterBy)
+      .query({ ...filterBy, folder: folderType })
       .then(setMails)
       .catch((err) => {
         showErrorMsg(`Error loading mails from ${folderType}`)
         console.log(err)
       })
+  }
+
+  function loadAllMails() {
+    return mailService.query({})
+      .then(setAllMails)
   }
 
   // Update specific mail property (front & back), and re-render MailIndex accordingly
@@ -50,6 +62,7 @@ export function MailIndex() {
 
     return mailService
       .save(updatedMail)
+      .then(loadAllMails)
       .catch((err) => {
         console.log(err)
         showErrorMsg(`Could update mail ${mailId}`)
@@ -68,6 +81,7 @@ export function MailIndex() {
           setMails((prev) => prev.filter((currMail) => currMail.id !== mailId))
           showSuccessMsg(`Mail ${mailId} removed`)
         })
+        .then(loadAllMails)
         .catch((err) => {
           console.log(err)
           showErrorMsg(`Could not delete mail ${mailId}`)

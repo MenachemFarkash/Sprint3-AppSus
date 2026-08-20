@@ -11,6 +11,7 @@ export const utilService = {
     getReadableDate,
     loadFromStorage,
     saveToStorage,
+    searchParamsToFilterBy
 }
 
 function saveToStorage(key, val) {
@@ -20,6 +21,10 @@ function saveToStorage(key, val) {
 function loadFromStorage(key) {
     const val = localStorage.getItem(key)
     return JSON.parse(val)
+}
+
+function searchParamsToFilterBy(searchParams) {
+    return Object.fromEntries(searchParams.entries())
 }
 
 function makeId(length = 6) {

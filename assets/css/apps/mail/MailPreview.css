@@ -41,9 +41,33 @@
     opacity: .32;
 }
 
+.btn-star .icon-star-solid {
+    display: none;
+}
+
 .btn-star.marked {
     color: var(--clr-4);
     opacity: .7;
+}
+
+.btn-star.marked .icon-star-solid {
+    display: inline;
+}
+
+.btn-star.marked .icon-star-regular {
+    display: none;
+}
+
+.btn-mail .icon-envelope-open {
+    display: none;
+}
+
+.btn-mail.unread .icon-envelope-closed {
+    display: none;
+}
+
+.btn-mail.unread .icon-envelope-open {
+    display: inline;
 }
 
 .sender-name {
