@@ -16,6 +16,7 @@ export const noteService = {
     changeColor,
     addNoteMsg,
     getNoteTypes,
+    updateChecklistCheck
 }
 
 function query(filterBy = {}) {
@@ -24,7 +25,7 @@ function query(filterBy = {}) {
 }
 
 function get(noteId) {
-    // fetch a single note by id
+    return storageService.get(NOTE_KEY, noteId)
 }
 
 function remove(noteId) {
@@ -32,11 +33,27 @@ function remove(noteId) {
 }
 
 function save(note) {
-    return storageService.post(NOTE_KEY, note)
+    if (note.id) {
+        return storageService.put(NOTE_KEY, note)
+    } else {
+        return storageService.post(NOTE_KEY, note)
+    }
 }
 
 function getDefaultFilter(filterBy = { txt: '', type: '' }) {
     // returns default filter object shape
+}
+
+function updateChecklistCheck(noteId, itemIndex, elIndex){
+    get(noteId).then(note => {
+        const item = note.elements[elIndex].items[itemIndex]
+        item.isChecked = !item.isChecked
+        
+        return save(note)
+        
+    })
+    
+
 }
 
 function _createNotes() {
@@ -86,6 +103,11 @@ function _createNotes() {
                     type: 'img',
                     url: `https://picsum.photos/200/200/?${utilService.getRandomIntInclusive(0, 7384)}`,
                 },
+                {type: 'ul', items: [
+                    {isChecked: true, txt: 'Something something'},
+                    {isChecked: false, txt: 'Something something'},
+                    {isChecked: false, txt: 'Something something'}
+                ]}
             ],
         }
         notes.push(note)

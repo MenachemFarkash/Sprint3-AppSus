@@ -30,7 +30,12 @@ nav a {
 }
 
 .app-logo {
-    padding-inline-end: 5.3em;
+    margin-inline-end: 5.3em;
+    max-width:120px ;
+}
+
+.app-logo img{
+    display: block;
 }
 
 nav a.active {

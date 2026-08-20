@@ -7,9 +7,7 @@ export function NoteList({ notes }) {
                 return (
                     <NotePreview
                         id={note.id}
-                        title={note.title}
                         color={note.color}
-                        bodyText={note.bodyText}
                         key={note.id}
                         note={note}
                     />

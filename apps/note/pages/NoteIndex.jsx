@@ -29,7 +29,7 @@ export function NoteIndex() {
             
             <div className="notes-container">
                 <CreateNote createNote={createNote} />
-                <NoteList notes={notes} />
+                <NoteList notes={notes} setNotes={setNotes}/>
             </div>
         </section>
     )
