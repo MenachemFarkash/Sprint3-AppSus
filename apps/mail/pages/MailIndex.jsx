@@ -50,18 +50,30 @@ export function MailIndex() {
       .then(setAllMails)
   }
 
-  // Update specific mail property (front & back), and re-render MailIndex accordingly
+  // Update specific mail property, and re-render MailIndex accordingly
   function onUpdateMail(mailId, update) {
     const mail = mails.find((currMail) => currMail.id === mailId)
     const updatedMail = { ...mail, ...update }
 
-    function replaceMail(newMail) {
-      setMails((prev) =>
-        prev.map((currMail) => (currMail.id === mailId ? newMail : currMail))
-      )
+    const leavesFolder =
+      (folderType === 'starred' && update.isStarred === false) ||
+      (folderType === 'trash' ? update.removedAt === null : Boolean(update.removedAt))
+
+    function applyMail(newMail, isLeaving) {
+      setMails((prev) => {
+        if (isLeaving) {
+          return prev.filter((currMail) => currMail.id !== mailId)
+        }
+
+        if (!prev.some((currMail) => currMail.id === mailId)) {
+          return [...prev, newMail]
+        }
+
+        return prev.map((currMail) => (currMail.id === mailId ? newMail : currMail))
+      })
     }
 
-    replaceMail(updatedMail)
+    applyMail(updatedMail, leavesFolder)
 
     return mailService
       .save(updatedMail)
@@ -69,7 +81,7 @@ export function MailIndex() {
       .catch((err) => {
         console.log(err)
         showErrorMsg(`Could update mail ${mailId}`)
-        replaceMail(mail)
+        applyMail(mail, false)
       })
   }
 
