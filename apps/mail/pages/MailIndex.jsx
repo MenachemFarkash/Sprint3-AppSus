@@ -130,6 +130,11 @@ export function MailIndex() {
     <section className="mail-index">
       <FoldersNav app="mail" folders={FOLDER_TYPES} unreadCounts={unreadCounts} onCompose={onCompose} />
 
+      <button className={`compose-fab${mailId && !isDraftCompose ? ' compose-fab-lowered' : ''}`} onClick={onCompose}>
+        <i className="fa-solid fa-pencil"></i>
+        <span>Compose</span>
+      </button>
+
       {mailId && !isDraftCompose
         ? <MailDetails onUpdateMail={onUpdateMail} onDeleteMail={onDeleteMail} />
         : <MailList mails={mails} onUpdateMail={onUpdateMail} onDeleteMail={onDeleteMail} />

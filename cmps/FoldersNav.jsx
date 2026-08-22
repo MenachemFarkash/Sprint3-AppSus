@@ -12,26 +12,37 @@ export function FoldersNav({ app, folders, unreadCounts = {}, onCompose }) {
     return eventBusService.on('toggle-folder-nav', () => setIsNavOpen(prev => !prev))
   }, [])
 
-  return (
-    <div className={`folders-nav ${isNavOpen ? 'selected' : ''}`}>
-      {app === 'mail' &&
-        <button className="compose-area" onClick={onCompose}>
-          <div className="compose"><i className="fa-solid fa-pencil"></i></div>
-          <span className="folder-txt">Compose</span>
-        </button>
-      }
+  function closeNav() {
+    setIsNavOpen(false)
+  }
 
-      <div className="folders-list">
-        {folders.map(folder => (
-          <FolderNavItem
-            app={app}
-            folder={folder}
-            folderType={folderType}
-            unreadCount={unreadCounts[folder.name] || 0}
-            key={folder.name}
-          />
-        ))}
+  return (
+    <React.Fragment>
+      <div className={`folders-nav ${isNavOpen ? 'selected' : ''}`}>
+        <img className="folders-nav-logo" src={`assets/icons/${app}.logo.png`} alt={`${app} logo`} />
+
+        {app === 'mail' &&
+          <button className="compose-area" onClick={onCompose}>
+            <div className="compose"><i className="fa-solid fa-pencil"></i></div>
+            <span className="folder-txt">Compose</span>
+          </button>
+        }
+
+        <div className="folders-list">
+          {folders.map(folder => (
+            <FolderNavItem
+              app={app}
+              folder={folder}
+              folderType={folderType}
+              unreadCount={unreadCounts[folder.name] || 0}
+              onNavigate={closeNav}
+              key={folder.name}
+            />
+          ))}
+        </div>
       </div>
-    </div>
+
+      <div className="folders-nav-backdrop" onClick={closeNav} />
+    </React.Fragment>
   )
 }

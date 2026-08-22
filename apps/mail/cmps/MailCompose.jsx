@@ -100,53 +100,56 @@ export function MailCompose({ mailId, onClose, onMailSave }) {
   const { body, subject, to } = mail
 
   return (
-    <div className="mail-compose">
-      <div className="compose-header">
-        <span className="compose-title">New Message</span>
+    <React.Fragment>
+      <div className="mail-compose-backdrop" onClick={onClose} />
+      <div className="mail-compose">
+        <div className="compose-header">
+          <span className="compose-title">New Message</span>
 
-        <button className="btn-close square-btn meta-txt"
-          onClick={onClose}
-        >
-            <i className="fa-solid fa-xmark"></i>
-        </button>
+          <button className="btn-close square-btn meta-txt"
+            onClick={onClose}
+          >
+              <i className="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <form ref={formRef} onSubmit={e => e.preventDefault()}>
+          <input
+            ref={toRef}
+            className="compose-field"
+            type="email"
+            name="to"
+            placeholder="Recipients"
+            required
+            value={to}
+            onChange={handleChange}
+          />
+
+          <input
+            className="compose-field"
+            name="subject"
+            placeholder="Subject"
+            required
+            value={subject}
+            onChange={handleChange}
+          />
+
+          <textarea
+            className="compose-body"
+            name="body"
+            required
+            value={body}
+            onChange={handleChange}
+          ></textarea>
+        </form>
+
+        <div className="compose-footer">
+          <button className="btn-send" onClick={onSend}>Send</button>
+          <button className="round-btn lrg btn-delete" onClick={onDelete}>
+            <i className="fa-regular fa-trash-can"></i>
+          </button>
+        </div>
       </div>
-
-      <form ref={formRef} onSubmit={e => e.preventDefault()}>
-        <input
-          ref={toRef}
-          className="compose-field"
-          type="email"
-          name="to"
-          placeholder="Recipients"
-          required
-          value={to}
-          onChange={handleChange} 
-        />
-        
-        <input
-          className="compose-field"
-          name="subject"
-          placeholder="Subject"
-          required
-          value={subject}
-          onChange={handleChange}
-        />
-        
-        <textarea
-          className="compose-body"
-          name="body"
-          required
-          value={body}
-          onChange={handleChange}
-        ></textarea>
-      </form>
-
-      <div className="compose-footer">
-        <button className="btn-send" onClick={onSend}>Send</button>
-        <button className="round-btn lrg btn-delete" onClick={onDelete}>
-          <i className="fa-regular fa-trash-can"></i>
-        </button>
-      </div>
-    </div>
+    </React.Fragment>
   )
 }

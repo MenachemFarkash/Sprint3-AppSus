@@ -1,10 +1,43 @@
 .mail-index {
     display: grid;
-    grid-template-columns: max-content 1fr;
+    grid-template-columns: 1fr;
 
     background-color: var(--clr-bg-main);
 }
 
-.mail-index.menu-open {
-    grid-template-columns: 16em 1fr;
+.compose-fab {
+    display: flex;
+    align-items: center;
+    gap: .5em;
+
+    position: fixed;
+    z-index: 11;
+
+    right: 1em;
+    bottom: 5em;
+
+    padding: .8em 1.2em;
+    border-radius: 28px;
+
+    background-color: var(--clr-bg-compose);
+    box-shadow:
+        0 1px 3px 0 var(--clr-shadow-main),
+        0 4px 8px 3px var(--clr-shadow--1)
+    ;
+
+    font-weight: 500;
+}
+
+.compose-fab-lowered {
+    bottom: 4em;
+}
+
+@media (min-width: 651px) {
+    .mail-index {
+        grid-template-columns: max-content 1fr;
+    }
+
+    .compose-fab {
+        display: none;
+    }
 }

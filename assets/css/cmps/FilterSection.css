@@ -20,7 +20,7 @@
     padding-inline: .4em;
 
     border-radius: 24px;
-    background-color: var(--clr-bg-search);
+    background-color: transparent;
 }
 
 .filter-panel {
@@ -85,7 +85,7 @@
     gap: 1.5em;
 }
 
-.clear-filter-btn {    
+.clear-filter-btn {
     color: var(--clr-1-1);
 }
 
@@ -93,7 +93,7 @@
     background-color: var(--clr-bg-clear);
 }
 
-.search-btn {    
+.search-btn {
     background-color: var(--clr-1);
     color: var(--clr-white);
 }
@@ -138,4 +138,18 @@
     background-color: transparent;
 
     font-size: 1rem;
+}
+
+.filter-bar .search-button {
+    display: none;
+}
+
+@media (min-width: 651px) {
+    .filter-bar {
+        background-color: var(--clr-bg-search);
+    }
+
+    .filter-bar .search-button {
+        display: inline-block;
+    }
 }
