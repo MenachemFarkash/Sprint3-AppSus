@@ -23,8 +23,8 @@
     background: var(--clr-bg-main);
     border-radius: 8px;
     box-shadow: 
-        0 2px 10px rgba(0, 0, 0, 0.2),
-        inset 0 0 0 8px rgb(233, 238, 246)
+        0 2px 10px var(--clr-shadow--2),
+        inset 0 0 0 8px var(--clr-bg-search)
     ;
 }
 
@@ -57,5 +57,5 @@
 }
 
 .app-menu-popup nav a:hover {
-    background-color: rgb(234, 234, 244);
+    background-color: var(--clr-bg-search);
 }
