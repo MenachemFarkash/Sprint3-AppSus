@@ -25,12 +25,12 @@ export function AppHeader() {
                     className="folder-nav-toggle round-btn"
                     onClick={toggleFolderNav}
                 >
-                    <img src="../assets/icons/folder-menu.icon.svg" alt="folder-menu" />
+                    <img src="assets/icons/folder-menu.icon.svg" alt="folder-menu" />
                 </button>
             }
 
             <Link className="app-logo" to="/">
-                <img src={`../assets/icons/${currApp}.logo.png`} alt={`${currApp} logo`} />
+                <img src={`assets/icons/${currApp}.logo.png`} alt={`${currApp} logo`} />
             </Link>
 
             {hasFolderNav &&

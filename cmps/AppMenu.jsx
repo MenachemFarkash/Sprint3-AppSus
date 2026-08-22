@@ -25,20 +25,20 @@ export function AppMenu() {
     return (
         <div className="app-menu">
             <button className="round-btn" onClick={toggleAppMenu}>
-                <img src="../assets/icons/app-menu.icon.svg" alt="apps-menu"/>
+                <img src="assets/icons/app-menu.icon.svg" alt="apps-menu"/>
             </button>
             <dialog ref={dialogRef} className="app-menu-popup" onClick={onBackdropClick}>
                 <nav>
                     <NavLink to="/about" onClick={closeAppMenu}>
-                        <img src="../assets/icons/about.icon.png" alt="" />
+                        <img src="assets/icons/about.icon.png" alt="" />
                         About
                     </NavLink>
                     <NavLink to="/mail" onClick={closeAppMenu}>
-                        <img src="../assets/icons/mail.icon.png" alt="" />
+                        <img src="assets/icons/mail.icon.png" alt="" />
                         Mail
                     </NavLink>
                     <NavLink to="/note" onClick={closeAppMenu}>
-                        <img src="../assets/icons/notes.icon.png" alt="" />
+                        <img src="assets/icons/notes.icon.png" alt="" />
                         Note
                     </NavLink>
                 </nav>
