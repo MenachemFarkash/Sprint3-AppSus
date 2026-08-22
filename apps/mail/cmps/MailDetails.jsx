@@ -15,7 +15,6 @@ export function MailDetails({ onUpdateMail, onDeleteMail }) {
   const [mail, setMail] = useState(null)
   const navigate = useNavigate()
   
-  
   useEffect(() => {
     mailService.get(mailId)
     .then(mail => {
@@ -54,6 +53,18 @@ export function MailDetails({ onUpdateMail, onDeleteMail }) {
         })
   }
 
+    function onStar() {
+      const opposite = !isStarred
+
+      setMail(prevMail => ({ ...prevMail, isStarred: opposite }))
+      onUpdateMail(mailId, { isStarred: opposite })
+        .catch(err => {
+          console.log(err)
+          showErrorMsg('Failed to star mail')
+          setMail(prevMail => ({ ...prevMail, isStarred: opposite }))
+        })
+  }
+
     function onNavToMail(targetMailId) {
     onUpdateMail(targetMailId, { isRead: true })
       .catch(err => console.log(err))
@@ -71,13 +82,17 @@ export function MailDetails({ onUpdateMail, onDeleteMail }) {
 
   if (!mail) return <Loader />
 
-  const { body, color, from, id, name, nextMailId, prevMailId, sentAt, subject, to } = mail
+  const { body, color, from, id, isStarred, name, nextMailId, prevMailId, sentAt, subject, to } = mail
   const userBgColor = from === LOGGED_USER_EMAIL ? LOGGED_USER_COLOR : color
 
   return <div className="mail-details">
     <div className="mail-options">
       <button className="round-btn lrg btn-nav" onClick={onReturnToFolder}><i className="fa-solid fa-arrow-left"></i></button>
       <button className="round-btn lrg btn-note" onClick={onSaveAsNote}><i className="fa-regular fa-lightbulb"></i></button>
+      <button className={`round-btn lrg btn-star ${isStarred ? 'marked' : ''}`} onClick={onStar}>
+        <i className="fa-solid fa-star icon-star-solid"></i>
+        <i className="fa-regular fa-star icon-star-regular"></i>
+      </button>
       <button className="round-btn lrg btn-mail" onClick={onMarkUnread}><i className="fa-regular fa-envelope"></i></button> 
       <button className="round-btn lrg btn-delete" onClick={onTrash}><i className="fa-regular fa-trash-can"></i></button>
       {renderNavButton(prevMailId, 'fa-chevron-left', true)}

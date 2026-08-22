@@ -11,7 +11,13 @@ export const utilService = {
     getReadableDate,
     loadFromStorage,
     saveToStorage,
-    searchParamsToFilterBy
+    searchParamsToFilterBy,
+    setFavicon
+}
+
+function setFavicon(iconPath) {
+    const link = document.querySelector('link[rel="icon"]')
+    if (link) link.href = iconPath
 }
 
 function saveToStorage(key, val) {
