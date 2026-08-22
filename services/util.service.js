@@ -5,6 +5,7 @@ export const utilService = {
     getRandomColor,
     padNum,
     getFullDate,
+    getDateOnly,
     getDayName,
     getDayNumber,
     getMonthName,
@@ -83,6 +84,15 @@ function getFullDate(date) {
         minute: '2-digit',
         second: '2-digit',
         hour12: false,
+    })
+}
+
+function getDateOnly(date) {
+    date = new Date(date)
+    return date.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
     })
 }
 

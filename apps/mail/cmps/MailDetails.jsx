@@ -112,10 +112,12 @@ export function MailDetails({ onUpdateMail, onDeleteMail }) {
             <span className="sender-name">{name}</span>
             <span className="small-txt meta-txt">{`< ${from} >`}</span>
             </p>
-            {/* Add function to render current user's username instead of mail if receiving user is me. Requires user service and function to check if receiever is current user. If not, render the target user */}
           <p className="small-txt meta-txt">{`to ${to}`}</p>
         </div>
-        <div className="small-txt meta-txt">{utilService.getFullDate(sentAt)}</div>
+        <div className="small-txt meta-txt sent-at">
+          <span className="sent-at-full">{utilService.getFullDate(sentAt)}</span>
+          <span className="sent-at-date-only">{utilService.getDateOnly(sentAt)}</span>
+        </div>
       </div>
       <div className="mail-body">{body}</div>
     </div>

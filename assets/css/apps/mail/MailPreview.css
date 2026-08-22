@@ -86,11 +86,21 @@
 
 .hover-actions {
     position: absolute;
-    
+
     display: none;
-    
+
     right: 1em;
     top: 50%;
-    
+
     transform: translateY(-50%);
+}
+
+.mail-preview .sender-avatar {
+    display: flex;
+}
+
+@media (min-width: 651px) {
+    .mail-preview .sender-avatar {
+        display: none;
+    }
 }
