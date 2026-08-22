@@ -3,13 +3,22 @@ import { FoldersNav } from '../../../cmps/FoldersNav.jsx'
 import { CreateNote } from '../cmps/CreateNote.jsx'
 import { NoteList } from '../cmps/NoteList.jsx'
 import { noteService } from '../services/note.service.js'
+import { utilService } from '../../../services/util.service.js'
+
+const FOLDER_TYPES = [
+    { name: 'notes' },
+    { name: 'reminders' },
+    { name: 'edit labels' },
+    { name: 'archive' },
+    { name: 'trash', icon: 'trash.icon.svg' },
+]
 
 export function NoteIndex() {
     const [notes, setNotes] = useState(noteService.query())
 
-    const FOLDER_TYPES = ['notes', 'reminders', 'edit labels', 'archive', 'trash']
-
     useEffect(() => {
+        utilService.setFavicon('assets/icons/notes.icon.png')
+
         const newNotes = noteService.query()
 
         setNotes(newNotes)
