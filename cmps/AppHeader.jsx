@@ -9,7 +9,7 @@ const { Link, useLocation } = ReactRouterDOM
 
 export function AppHeader() {
     const { pathname } = useLocation()
-    const currApp = pathname.split('/')[1]
+    const currApp = pathname.split('/')[1] || 'about'
     const routeKey = pathname.split('/').slice(0, 4).join('/')
 
     const { hasFolderNav, txtToFilterBy, filterByToTxt, advancedFilterFields } = APP_CONFIG[currApp] || {}
