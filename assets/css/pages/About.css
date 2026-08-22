@@ -1,0 +1,137 @@
+.about {
+    max-width: 900px;
+    margin-inline: auto;
+    padding-block: 2em;
+}
+
+.about h1 {
+    font-size: 2.4em;
+    font-weight: 700;
+    margin-block-end: .4em;
+}
+
+.about h2 {
+    font-size: 1.4em;
+    font-weight: 600;
+    margin-block-end: .8em;
+}
+
+.about-intro p {
+    font-size: 1.05em;
+    line-height: 1.6;
+    color: var(--clr-meta);
+}
+
+.about-stack {
+    margin-block-start: 2em;
+}
+
+.stack-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .75em;
+}
+
+.stack-item {
+    display: flex;
+    align-items: center;
+    gap: .5em;
+
+    padding: .5em 1em;
+    border-radius: 999px;
+    background-color: var(--clr-bg--1);
+
+    font-size: .95em;
+    
+    box-shadow: 3px 3px 3px 0 var(--clr-shadow-1);
+}
+
+.stack-item i {
+    color: var(--clr-1);
+}
+
+.about-team {
+    margin-block-start: 2em;
+}
+
+.team-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.team-card {
+    display: flex;
+    align-items: center;
+    gap: 1.25em;
+
+    padding: 1.25em;
+    border-radius: var(--radius-panel);
+    background-color: var(--clr-bg--1);
+    
+    box-shadow: 3px 3px 3px 0 var(--clr-shadow-1);
+}
+
+.team-avatar {
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 4.5em;
+    height: 4.5em;
+    border-radius: 50%;
+
+    color: var(--clr-bg--1);
+    font-size: 1.8em;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.team-info h3 {
+    font-size: 1.15em;
+    font-weight: 600;
+    margin-block-end: .3em;
+}
+
+.team-title {
+    font-weight: 600;
+    margin-block-end: .3em;
+}
+
+.team-info p {
+    color: var(--clr-meta);
+    line-height: 1.5;
+    margin-block-end: .6em;
+    white-space: pre-line;
+}
+
+.team-links {
+    display: flex;
+    gap: .75em;
+    font-size: 1.2em;
+}
+
+.team-links a {
+    color: var(--clr-meta);
+}
+
+@media (max-width: 600px) {
+    .about {
+        padding-block-end: 6em;
+    }
+
+    .about h1 {
+        font-size: 1.9em;
+    }
+
+    .team-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .team-links {
+        justify-content: center;
+    }
+}

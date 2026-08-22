@@ -4,7 +4,8 @@
 @import './basics/layout.css';
 @import './basics/typography.css';
 
-@import './cmps/home.css';
+@import './pages/About.css';
+
 @import './cmps/Loader.css';
 @import './cmps/UserMsg.css';
 @import './cmps/UserAvatar.css';
