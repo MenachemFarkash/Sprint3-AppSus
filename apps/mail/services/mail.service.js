@@ -47,6 +47,7 @@ export const mailService = {
     remove,
     save,
     getEmptyMail,
+    bodyFromNoteElements,
 }
 export const mailFilterFields = [
     { name: 'from', label: 'From' },
@@ -116,12 +117,33 @@ function save(mail) {
     return storageService.post(MAIL_KEY, mail)
 }
 
+// Function for notes integration
+// 1. create a mail via
+// {
+//  ...getEmptyMail(),
+//  name: LOGGED_USER_FULLNAME,
+//  body: bodyFromNoteElements(note.elements)
+// }
+// 2. use mailService.save() to save the new mail as draft.
+// 3. Get the new mail ID, then navigate to mail/folder/draft/{new mail id}
+//
+// Note: this was created based on what I saw in notes branch
+function bodyFromNoteElements(elements = []) {
+    return elements.map(el => {
+        if (el.type === 'ul') {
+            return el.items.map(item => `[${item.isChecked ? 'x' : ' '}] ${item.txt}`).join('\n')
+        }
+        if (el.type === 'img') return `[image: ${el.url}]`
+        return el.txt || ''
+    }).filter(Boolean).join('\n\n')
+}
+
 function getEmptyMail() {
     return {
         body: '',
         createdAt: Date.now(),
         from: LOGGED_USER_EMAIL,
-        isRead: false,
+        isRead: true,
         isStarred: false,
         labels: [],
         name: '',
@@ -146,7 +168,6 @@ function _createMails() {
             isRead: false,
             isStarred: false,
             labels: ['important'],
-            // TODO: Use users db to get the user's name - not name property
             name: 'Momo Momo',
             removedAt: null,
             sentAt: 1551133930594,
@@ -287,17 +308,131 @@ function _createMails() {
             sentAt: 1551911530594,
             subject: 'Monthly statement ready',
             to: 'user@appsus.com'
+        },
+        {
+            id: utilService.makeId(),
+            body: 'Thanks for the update, sounds good to me.',
+            color: utilService.getRandomColor(),
+            createdAt: 1551997930500,
+            from: 'user@appsus.com',
+            isRead: true,
+            isStarred: false,
+            labels: [],
+            name: 'Mahatma Appsus',
+            removedAt: null,
+            sentAt: 1551997930594,
+            subject: 'Re: Standup time change',
+            to: 'boss@work.com'
+        },
+        {
+            id: utilService.makeId(),
+            body: 'Attached the files you asked for, let me know if anything is missing.',
+            color: utilService.getRandomColor(),
+            createdAt: 1552084330500,
+            from: 'user@appsus.com',
+            isRead: true,
+            isStarred: false,
+            labels: ['work'],
+            name: 'Mahatma Appsus',
+            removedAt: null,
+            sentAt: 1552084330594,
+            subject: 'Files attached',
+            to: 'yossi@work.com'
+        },
+        {
+            id: utilService.makeId(),
+            body: 'Hey, are we still on for Friday dinner?',
+            color: utilService.getRandomColor(),
+            createdAt: 1552170730500,
+            from: 'user@appsus.com',
+            isRead: true,
+            isStarred: false,
+            labels: [],
+            name: 'Mahatma Appsus',
+            removedAt: null,
+            sentAt: 1552170730594,
+            subject: 'Re: Dinner Friday?',
+            to: 'ronit@friends.com'
+        },
+        {
+            id: utilService.makeId(),
+            body: 'Hi team, just wanted to follow up on the budget for next quarter...',
+            color: utilService.getRandomColor(),
+            createdAt: 1552257130500,
+            from: 'user@appsus.com',
+            isRead: true,
+            isStarred: false,
+            labels: [],
+            name: 'Mahatma Appsus',
+            removedAt: null,
+            sentAt: null,
+            subject: 'Budget follow up',
+            to: 'boss@work.com'
+        },
+        {
+            id: utilService.makeId(),
+            body: 'Draft: notes for the trip itinerary, still need to fill in hotel info.',
+            color: utilService.getRandomColor(),
+            createdAt: 1552343530500,
+            from: 'user@appsus.com',
+            isRead: true,
+            isStarred: false,
+            labels: [],
+            name: 'Mahatma Appsus',
+            removedAt: null,
+            sentAt: null,
+            subject: 'Trip itinerary',
+            to: ''
+        },
+        {
+            id: utilService.makeId(),
+            body: 'You have won a free cruise! Click here to claim.',
+            color: utilService.getRandomColor(),
+            createdAt: 1552429930500,
+            from: 'spam@lottery.com',
+            isRead: true,
+            isStarred: false,
+            labels: [],
+            name: 'Lucky Winner',
+            removedAt: 1552516330594,
+            sentAt: 1552429930594,
+            subject: 'You won!',
+            to: 'user@appsus.com'
+        },
+        {
+            id: utilService.makeId(),
+            body: 'Old meeting notes, no longer needed.',
+            color: utilService.getRandomColor(),
+            createdAt: 1552516330500,
+            from: 'user@appsus.com',
+            isRead: true,
+            isStarred: false,
+            labels: [],
+            name: 'Mahatma Appsus',
+            removedAt: 1552602730594,
+            sentAt: 1552516330594,
+            subject: 'Old meeting notes',
+            to: 'yossi@work.com'
+        },
+        {
+            id: utilService.makeId(),
+            body: 'Unsubscribe confirmed, you will no longer receive these emails.',
+            color: utilService.getRandomColor(),
+            createdAt: 1552602730500,
+            from: 'noreply@newsletter.com',
+            isRead: true,
+            isStarred: false,
+            labels: [],
+            name: 'Weekly Newsletter',
+            removedAt: 1552689130594,
+            sentAt: 1552602730594,
+            subject: 'Unsubscribed',
+            to: 'user@appsus.com'
         }
     ]
 
     mails.push(...mockMails)
     utilService.saveToStorage(MAIL_KEY, mails)
-}
-
-function _createMail() {
-    const mail = getEmptyMail()
-    mail.id = utilService.makeId()
-    return mail
 }
 
 const folderCheckers = {
