@@ -9,7 +9,7 @@ const { useState, useEffect } = React
 const { useParams } = ReactRouter
 const { useNavigate } = ReactRouterDOM
 
-export function MailDetails({ onUpdateMail, onDeleteMail }) {
+export function MailDetails({ onUpdateMail, onDeleteMail, onSaveAsNote }) {
   
   const { id: mailId, type: folderType } = useParams()
   const [mail, setMail] = useState(null)
@@ -25,7 +25,7 @@ export function MailDetails({ onUpdateMail, onDeleteMail }) {
     })
     .catch((err) => {
       console.log(err)
-      showErrorMsg(`Failed to load mail ${mailId}`)
+      showErrorMsg('Failed to load mail')
       onReturnToFolder()
     })
   }, [mailId])
@@ -37,9 +37,6 @@ export function MailDetails({ onUpdateMail, onDeleteMail }) {
   function onTrash() {
     onDeleteMail(id).then(onReturnToFolder)
   }
-
-  // TODO: Notes integration - Move to notes page, and send object with needed property values to note creation 
-  function onSaveAsNote() {}
 
   function onMarkUnread() {
     onUpdateMail(id, {isRead: false})
@@ -88,7 +85,7 @@ export function MailDetails({ onUpdateMail, onDeleteMail }) {
   return <div className="mail-details">
     <div className="mail-options">
       <button className="round-btn lrg btn-nav" onClick={onReturnToFolder}><i className="fa-solid fa-arrow-left"></i></button>
-      <button className="round-btn lrg btn-note" onClick={onSaveAsNote}><i className="fa-regular fa-lightbulb"></i></button>
+      <button className="round-btn lrg btn-note" onClick={() => onSaveAsNote(mail)}><i className="fa-regular fa-lightbulb"></i></button>
       <button className={`round-btn lrg btn-star ${isStarred ? 'marked' : ''}`} onClick={onStar}>
         <i className="fa-solid fa-star icon-star-solid"></i>
         <i className="fa-regular fa-star icon-star-regular"></i>
