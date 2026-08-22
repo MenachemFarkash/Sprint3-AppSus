@@ -1,0 +1,79 @@
+.note-container {
+    display: flex;
+    flex-direction: column;
+
+    border: 1px solid #dadce0;
+    border-radius: 8px;
+    padding: 12px;
+
+    break-inside: avoid;
+
+    min-height: 100px;
+    max-width: 240px;
+
+    margin-block-end: 16px;
+
+    font-family: Arial, Helvetica, sans-serif;
+    color: #202124;
+
+    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.15);
+
+    transition:
+        box-shadow 0.15s ease,
+        transform 0.15s ease;
+}
+
+.note-container:hover {
+    box-shadow: 0 3px 8px rgba(60, 64, 67, 0.25);
+}
+
+.note-title {
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.note-body-text {
+    font-size: 18px;
+    line-height: 1.5;
+    color: #3c3f42;
+}
+
+.note-container:hover .note-action-buttons > button {
+    display: block;
+}
+
+.note-action-buttons > button {
+    display: none;
+}
+
+.note-action-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: auto;
+    height: 28px;
+}
+
+.note-dynamic-element {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    line-clamp: 10;
+    -webkit-line-clamp: 10;
+    overflow: hidden;
+}
+
+h1.note-dynamic-element {
+    font-weight: 500;
+    font-size: 20px;
+    margin-block-end: 1em;
+}
+p.note-dynamic-element {
+    font-size: 11pt;
+    margin-block-end: 1em;
+    line-height: 18pt;
+}
+
+.note-container image{
+    height: 100%;
+    object-fit: cover;
+}

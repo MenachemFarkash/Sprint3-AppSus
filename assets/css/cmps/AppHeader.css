@@ -31,6 +31,12 @@ nav a {
 }
 
 .app-logo {
+    margin-inline-end: 5.3em;
+    max-width:120px ;
+}
+
+.app-logo img{
+    display: block;
     grid-column: 2;
 
     display: flex;
