@@ -85,6 +85,7 @@ button.lrg,
     color: var(--clr-3);
 }
 
-.btn-note:hover {
+.btn-note:hover,
+.btn-star:hover {
     color: var(--clr-4);
 }
