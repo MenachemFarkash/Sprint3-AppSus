@@ -1,25 +1,82 @@
 .user-msg {
+    z-index: -1;
     position: fixed;
-    bottom: -100px;
+    
+    display: flex;
+    align-items: center;
+    gap: .6em;
+    
     right: .5em;
+    top: 1.2em;
+    
+    max-width: 420px;
+    min-width: 280px;
+    
+    border-radius: var(--radius-panel);
+    border-inline-start: 4px solid transparent;
     padding: .5em;
-    background-color: #111;
+    background-color: var(--clr-white);
+    
+    font-size: var(--fs-secondary);
+    color: var(--clr-meta);
+    
+    opacity: 0;
+    box-shadow: 0 2px 6px 2px var(--clr-shadow-1), 0 1px 2px var(--clr-shadow-main);
+    transition: bottom var(--duration-quick) var(--ease-standard),
+                opacity var(--duration-quick) var(--ease-standard);
 }
 
 .user-msg.open {
-    bottom: .8em;
-    transition: bottom .5s;
+    z-index: 20;
+    opacity: 1;
 }
 
-.user-msg.success {
+.user-msg::before {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    
+    height: 1.4em;
+    width: 1.4em;
+    
+    border-radius: 50%;
+    
+    color: var(--clr-white);
+    font-size: .85em;
+    font-weight: bold;
+}
+
+
+.user-msg.success::before {
+    content: '✓';
     background-color: var(--clr-2);
 }
 
-.user-msg.error {
+
+.user-msg.error::before {
+    content: '!';
     background-color: var(--clr-3);
 }
 
-.user-msg button{
-   float: right;
-   margin-inline-start: 4px;
+.user-msg span {
+    flex: 1;
+}
+
+.user-msg button {
+    height: 1.6em;
+    width: 1.6em;
+    
+    border: none;
+    border-radius: 50%;
+    background: none;
+
+    color: var(--clr-meta);
+    font-size: 1em;
+    cursor: pointer;
+    
+    transition: background-color var(--duration-quick) var(--ease-standard);
+}
+
+.user-msg button:hover {
+    background-color: var(--clr-overlay-hover);
 }
