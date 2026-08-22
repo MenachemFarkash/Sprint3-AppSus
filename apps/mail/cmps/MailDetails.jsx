@@ -15,7 +15,6 @@ export function MailDetails({ onUpdateMail, onDeleteMail }) {
   const [mail, setMail] = useState(null)
   const navigate = useNavigate()
   
-  
   useEffect(() => {
     mailService.get(mailId)
     .then(mail => {
@@ -54,6 +53,18 @@ export function MailDetails({ onUpdateMail, onDeleteMail }) {
         })
   }
 
+    function onStar() {
+      const opposite = !isStarred
+
+      setMail(prevMail => ({ ...prevMail, isStarred: opposite }))
+      onUpdateMail(mailId, { isStarred: opposite })
+        .catch(err => {
+          console.log(err)
+          showErrorMsg('Failed to star mail')
+          setMail(prevMail => ({ ...prevMail, isStarred: opposite }))
+        })
+  }
+
     function onNavToMail(targetMailId) {
     onUpdateMail(targetMailId, { isRead: true })
       .catch(err => console.log(err))
@@ -71,13 +82,17 @@ export function MailDetails({ onUpdateMail, onDeleteMail }) {
 
   if (!mail) return <Loader />
 
-  const { body, color, from, id, name, nextMailId, prevMailId, sentAt, subject, to } = mail
+  const { body, color, from, id, isStarred, name, nextMailId, prevMailId, sentAt, subject, to } = mail
   const userBgColor = from === LOGGED_USER_EMAIL ? LOGGED_USER_COLOR : color
 
   return <div className="mail-details">
     <div className="mail-options">
       <button className="round-btn lrg btn-nav" onClick={onReturnToFolder}><i className="fa-solid fa-arrow-left"></i></button>
       <button className="round-btn lrg btn-note" onClick={onSaveAsNote}><i className="fa-regular fa-lightbulb"></i></button>
+      <button className={`round-btn lrg btn-star ${isStarred ? 'marked' : ''}`} onClick={onStar}>
+        <i className="fa-solid fa-star icon-star-solid"></i>
+        <i className="fa-regular fa-star icon-star-regular"></i>
+      </button>
       <button className="round-btn lrg btn-mail" onClick={onMarkUnread}><i className="fa-regular fa-envelope"></i></button> 
       <button className="round-btn lrg btn-delete" onClick={onTrash}><i className="fa-regular fa-trash-can"></i></button>
       {renderNavButton(prevMailId, 'fa-chevron-left', true)}
@@ -97,10 +112,12 @@ export function MailDetails({ onUpdateMail, onDeleteMail }) {
             <span className="sender-name">{name}</span>
             <span className="small-txt meta-txt">{`< ${from} >`}</span>
             </p>
-            {/* Add function to render current user's username instead of mail if receiving user is me. Requires user service and function to check if receiever is current user. If not, render the target user */}
           <p className="small-txt meta-txt">{`to ${to}`}</p>
         </div>
-        <div className="small-txt meta-txt">{utilService.getFullDate(sentAt)}</div>
+        <div className="small-txt meta-txt sent-at">
+          <span className="sent-at-full">{utilService.getFullDate(sentAt)}</span>
+          <span className="sent-at-date-only">{utilService.getDateOnly(sentAt)}</span>
+        </div>
       </div>
       <div className="mail-body">{body}</div>
     </div>

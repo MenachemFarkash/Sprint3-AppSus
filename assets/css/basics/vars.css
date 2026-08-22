@@ -2,7 +2,12 @@
     /* Colors */
     --clr-white: #ffffff;
     --clr-meta: #5e5e5e;
+    --clr-compose-title: #041e49;
+    --clr-draft: #e64c40;
+    --clr-1-1: #1b61d1;
     --clr-1: #0461b7;
+    --clr-1--1: #1a73e873;
+    --clr-1--2: #1a73e84d;
     --clr-2: #00803d;
     --clr-3: #c5221f;
     --clr-4: #fad52f;
@@ -12,13 +17,14 @@
     --clr-bg-selected: #d1e3fc;
     --clr-bg-compose: #c2e7ff;
     --clr-bg-search: #eaeaf4;
+    --clr-bg-clear: #ebf2fb;
 
     --clr-border-hover: #dadce0;
     --clr-overlay-hover: #2021240f;
     
+    --clr-shadow-1: #64798f1f;
     --clr-shadow-main: #3c40434d;
     --clr-shadow--1: #3c404326;
-    --clr-shadow-1: #64798f1f;
     --clr-shadow--2: #00000042;
 
     /* Motion */

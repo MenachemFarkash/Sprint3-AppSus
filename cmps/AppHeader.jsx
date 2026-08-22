@@ -9,28 +9,34 @@ const { Link, useLocation } = ReactRouterDOM
 
 export function AppHeader() {
     const { pathname } = useLocation()
-    const currApp = pathname.split('/')[1]
+    const currApp = pathname.split('/')[1] || 'about'
     const routeKey = pathname.split('/').slice(0, 4).join('/')
 
     const { hasFolderNav, txtToFilterBy, filterByToTxt, advancedFilterFields } = APP_CONFIG[currApp] || {}
+
+    const pathSegments = pathname.split('/').filter(Boolean)
+    const folderType = pathSegments[2]
+    const mailId = pathSegments[3]
+    
+    const isMailDetails = (currApp === 'mail') && Boolean(mailId) && (folderType !== 'draft')
 
     function toggleFolderNav() {
         eventBusService.emit('toggle-folder-nav')
     }
 
     return (
-        <header className="app-header">
+        <header className={`app-header ${isMailDetails ? 'mail-details-open' : ''}`}>
             {hasFolderNav &&
                 <button
                     className="folder-nav-toggle round-btn"
                     onClick={toggleFolderNav}
                 >
-                    <img src="../assets/icons/folder-menu.icon.svg" alt="folder-menu" />
+                    <img src="assets/icons/folder-menu.icon.svg" alt="folder-menu" />
                 </button>
             }
 
             <Link className="app-logo" to="/">
-                <img src={`../assets/icons/${currApp}.logo.png`} alt={`${currApp} logo`} />
+                <img src={`assets/icons/${currApp}.logo.png`} alt={`${currApp} logo`} />
             </Link>
 
             {hasFolderNav &&

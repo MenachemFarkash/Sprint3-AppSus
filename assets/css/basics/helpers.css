@@ -50,7 +50,8 @@ button.lrg,
     font-size: 1.1em;
 }
 
-.round-btn::before {
+.round-btn::before,
+.square-btn::before {
     content: "";
     z-index: -1;
     position: absolute;
@@ -69,7 +70,12 @@ button.lrg,
     transition: transform var(--duration-quick) var(--ease-standard);
 }
 
-.round-btn:hover::before {
+.square-btn::before {
+    border-radius: 0;
+}
+
+.round-btn:hover::before,
+.square-btn:hover::before {
     transform: translate(-50%, -50%) scale(1);
 }
 
@@ -85,6 +91,7 @@ button.lrg,
     color: var(--clr-3);
 }
 
-.btn-note:hover {
+.btn-note:hover,
+.btn-star:hover {
     color: var(--clr-4);
 }

@@ -74,3 +74,93 @@ nav a.active {
     border-radius: 50%;
     border: 1px solid black
 }
+
+.app-header:has(.filter-section) {
+    grid-template-columns: 2.5em 1fr 2.5em;
+    gap: 0;
+
+    height: 3em;
+
+    margin-block: .5em;
+    margin-inline: 1em;
+
+    padding-block: 0;
+    padding-inline: .5em;
+    background-color: var(--clr-bg-search);
+    border-radius: 24px;
+}
+
+.app-header .app-logo {
+    grid-column: 1;
+}
+
+.app-header:has(.filter-section) .app-logo {
+    display: none;
+}
+
+.app-header:has(.filter-section) .folder-nav-toggle {
+    padding-inline: 0;
+}
+
+.app-header:has(.filter-section) .folder-nav-toggle img {
+    height: 1.5em;
+    width: 1.5em;
+}
+
+.app-header:has(.filter-section) .filter-section {
+    grid-column: 2;
+}
+
+.app-header:has(.filter-section) .user-avatar-btn {
+    grid-column: 3;
+}
+
+.app-header.mail-details-open {
+    display: none;
+}
+
+@media (min-width: 651px) {
+    .app-header:has(.filter-section) {
+        grid-template-columns: 3.5em max-content 1fr 3em 3em;
+        gap: normal;
+
+        height: 4em;
+
+        margin-block: 0;
+        margin-inline: 0;
+
+        padding-block: .5em;
+        padding-inline: .5em;
+        background-color: var(--clr-bg-main);
+        border-radius: 0;
+    }
+
+    .app-header .app-logo {
+        grid-column: 2;
+    }
+
+    .app-header:has(.filter-section) .app-logo {
+        display: flex;
+    }
+
+    .app-header:has(.filter-section) .folder-nav-toggle {
+        padding-inline: .75em;
+    }
+
+    .app-header:has(.filter-section) .folder-nav-toggle img {
+        height: auto;
+        width: auto;
+    }
+
+    .app-header:has(.filter-section) .filter-section {
+        grid-column: 3;
+    }
+
+    .app-header:has(.filter-section) .user-avatar-btn {
+        grid-column: 5;
+    }
+
+    .app-header.mail-details-open {
+        display: grid;
+    }
+}

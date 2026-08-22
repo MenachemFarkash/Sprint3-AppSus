@@ -8,7 +8,17 @@
     display: grid;
     grid-template-rows: 5em 1fr;
 
-    width: 4.5em;
+    position: fixed;
+    z-index: 20;
+
+    top: 0;
+    left: 0;
+    bottom: 0;
+
+    width: 0;
+
+    background-color: var(--clr-white);
+    box-shadow: 2px 0 4px 0 var(--clr-shadow-main);
 
     overflow: hidden;
     transition: width var(--duration-expand) ease;
@@ -16,7 +26,7 @@
 
 .folders-nav.selected,
 .folders-nav:hover {
-    width: 16em;
+    width: 80%;
     transition: width var(--duration-expand) ease var(--delay-expand);
 
     .folder.unread::after {
@@ -37,12 +47,12 @@
         visibility: visible;
     }
 
-    .folders-list>a:hover:not(:has(.selected))::before,
-    .folders-list>a:has(.selected)::before {
+    .folders-list>a:hover:not(:has(.selected))::before {
         width: 15em;
     }
 
     .folders-list>a:has(.selected)::before {
+        width: 20.5em;
         transition:
             visibility 0s step-end var(--delay-expand),
             width 0s ease .1s
@@ -58,6 +68,14 @@
     }
 }
 
+.folders-nav:hover:not(.selected) {
+    width: 0;
+}
+
+.folders-nav:hover:not(.selected) .folders-list>a:has(.selected)::before {
+    width: 0;
+}
+
 .folders-nav.selected {
     --delay-expand: 0s;
 }
@@ -65,7 +83,7 @@
 .compose-area {
     align-self: center;
 
-    display: flex;
+    display: none;
     align-items: center;
     gap: .7em;
 
@@ -121,7 +139,9 @@
 
     width: 100%;
 
+    height: 2.5em;
     padding-inline: 1.3em;
+    border-radius: 0 20px 20px 0;
 }
 
 .folders-list>a::before {
@@ -131,11 +151,11 @@
 
     display: block;
 
-    height: var(--icon-size);
+    height: 2.5em;
     width: 0;
     left: 0;
 
-    border-radius: 0 15px 15px 0;
+    border-radius: 0 20px 20px 0;
     background-color: var(--clr-overlay-hover);
 
     visibility: hidden;
@@ -185,8 +205,8 @@
     display: block;
     opacity: 1;
 
-    top: 10%;
-    right: 10%;
+    top: 5%;
+    right: 5%;
 
     border-radius: 50%;
     padding: .25em;
@@ -209,4 +229,85 @@
 .folder.unread ~ .folder-txt,
 .folder.selected ~ .folder-txt {
     font-weight: 500;
+}
+
+.folders-nav-backdrop {
+    display: none;
+}
+
+.folders-nav-logo {
+    display: block;
+    align-self: center;
+    justify-self: start;
+
+    height: auto;
+    width: auto;
+
+    padding-inline-start: 1.7em;
+}
+
+.folders-nav.selected ~ .folders-nav-backdrop {
+    display: block;
+    position: fixed;
+    z-index: 15;
+
+    inset: 0;
+
+    background-color: var(--clr-shadow--2);
+}
+
+@media (min-width: 651px) {
+    .folders-nav {
+        position: static;
+        z-index: auto;
+
+        top: auto;
+        left: auto;
+        bottom: auto;
+
+        width: 4.5em;
+
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+    .folders-nav.selected,
+    .folders-nav:hover {
+        width: 16em;
+    }
+
+    .folders-nav:hover:not(.selected) {
+        width: 16em;
+    }
+
+    .folders-nav.selected .folders-list>a:has(.selected)::before,
+    .folders-nav:hover .folders-list>a:has(.selected)::before {
+        width: 15em;
+    }
+
+    .folders-nav:hover:not(.selected) .folders-list>a:has(.selected)::before {
+        width: 15em;
+    }
+
+    .compose-area {
+        display: flex;
+    }
+
+    .folders-list>a {
+        height: auto;
+        border-radius: 0;
+    }
+
+    .folders-list>a::before {
+        height: var(--icon-size);
+        border-radius: 0 15px 15px 0;
+    }
+
+    .folders-nav-logo {
+        display: none;
+    }
+
+    .folders-nav.selected ~ .folders-nav-backdrop {
+        display: none;
+    }
 }

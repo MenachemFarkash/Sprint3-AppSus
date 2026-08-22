@@ -1,6 +1,6 @@
 .mail-list {
     display: grid;
-    grid-template-columns: 3em 9em 1fr 4.5em max-content;
+    grid-template-columns: 3.5em 1fr max-content;
     align-content: start;
 
     height: 98%;
@@ -11,12 +11,13 @@
 
 .mail-list > li {
     grid-column: 1 / -1;
-    
+
     display: grid;
     grid-template-columns: subgrid;
+    grid-template-rows: repeat(2, auto);
     align-items: center;
 
-    height: 2.5em;
+    height: 4.5em;
     padding-inline-end: 1em;
 }
 
@@ -28,6 +29,57 @@
     justify-self: start;
 }
 
+.sender-avatar {
+    grid-column: 1;
+    grid-row: 1 / 3;
+}
+
+.sender-name {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.mail-intro {
+    grid-column: 2;
+    grid-row: 2;
+}
+
 .received-at {
-    grid-column: 5;
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+}
+
+.btn-star {
+    grid-column: 3;
+    grid-row: 2;
+    justify-self: end;
+}
+
+@media (min-width: 651px) {
+    .mail-list {
+        grid-template-columns: 3em 9em 1fr 4.5em max-content;
+    }
+
+    .mail-list > li {
+        grid-template-rows: none;
+        height: 2.5em;
+    }
+
+    .sender-avatar,
+    .sender-name,
+    .mail-intro,
+    .btn-star {
+        grid-column: auto;
+        grid-row: auto;
+    }
+
+    .received-at {
+        grid-column: 5;
+        justify-self: auto;
+    }
+
+    .btn-star {
+        justify-self: auto;
+    }
 }
