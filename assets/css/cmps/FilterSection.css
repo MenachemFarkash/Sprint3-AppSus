@@ -39,6 +39,9 @@
 
     background-color: var(--clr-white);
     border-radius: var(--radius-panel);
+
+    font-size: .875rem;
+
     box-shadow:
         0 1px 3px 0 var(--clr-shadow-main),
         0 4px 8px 3px var(--clr-shadow--1)
@@ -58,12 +61,19 @@
     padding-block: .3em;
 
     background-color: transparent;
-    font-size: 1rem;
 }
 
 .filter-panel input:focus,
 .filter-panel select:focus {
     border-bottom: 2px solid var(--clr-1);
+}
+
+.filter-panel-sort {
+    grid-column: 1 / -1;
+
+    display: grid;
+    grid-template-columns: repeat(2, max-content 1fr);
+    gap: .9em 1em;
 }
 
 .filter-panel-actions {
@@ -75,22 +85,24 @@
     gap: 1.5em;
 }
 
-.clear-filter-btn {
-    border: none;
-    background-color: none;
-
-    color: var(--clr-meta);
-    font-size: 1rem;
+.clear-filter-btn {    
+    color: var(--clr-1-1);
 }
 
+.clear-filter-btn:hover {
+    background-color: var(--clr-bg-clear);
+}
+
+.search-btn {    
+    background-color: var(--clr-1);
+    color: var(--clr-white);
+}
+
+.clear-filter-btn,
 .search-btn {
     padding: .6em 1.5em;
     border: none;
     border-radius: 24px;
-
-    background-color: var(--clr-1);
-    color: var(--clr-white);
-    font-size: 1rem;
 }
 
 .search-button {
