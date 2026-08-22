@@ -18,17 +18,19 @@ const DATE_WITHIN_OPTIONS = [
 ]
 const SORT_BY_OPTIONS = [
     { value: '', label: 'Default' },
-    { value: 'name_asc', label: 'Sender (A-Z)' },
-    { value: 'name_desc', label: 'Sender (Z-A)' },
-    { value: 'subject_asc', label: 'Subject (A-Z)' },
-    { value: 'subject_desc', label: 'Subject (Z-A)' },
-    { value: 'sentAt_asc', label: 'Date (oldest)' },
-    { value: 'sentAt_desc', label: 'Date (newest)' },
+    { value: 'name', label: 'Sender' },
+    { value: 'subject', label: 'Subject' },
+    { value: 'sentAt', label: 'Date' },
+]
+const SORT_DIR_OPTIONS = [
+    { value: 1, label: 'Ascending' },
+    { value: -1, label: 'Descending' },
 ]
 const SORT_COMPARATORS = {
     name: (a, b) => a.name.localeCompare(b.name),
     subject: (a, b) => a.subject.localeCompare(b.subject),
     sentAt: (a, b) => (a.sentAt || 0) - (b.sentAt || 0),
+    createdAt: (a, b) => (a.createdAt || 0) - (b.createdAt || 0),
 }
 
 _createMails()
@@ -54,10 +56,11 @@ export const mailFilterFields = [
     { name: 'subject', label: 'Subject' },
     { name: 'sentBetween', label: 'Date within', type: 'select', options: DATE_WITHIN_OPTIONS },
     { name: 'sortBy', label: 'Sort by', type: 'select', options: SORT_BY_OPTIONS },
+    { name: 'sortDir', label: 'Direction', type: 'select', options: SORT_DIR_OPTIONS },
 ]
 
 function query(filterBy = {}) {
-    const {from, to, sentBetween, subject, txt, folder, sortBy} = filterBy
+    const {from, to, sentBetween, subject, txt, folder, sortBy, sortDir} = filterBy
 
     return storageService.query(MAIL_KEY)
         .then( mails => {
@@ -90,13 +93,10 @@ function query(filterBy = {}) {
             if (folder) {
                 mails = mails.filter(mail => _isInFolder(mail, folder))
             }
-            if (sortBy) {
-                const [field, dir] = sortBy.split('_')
-                const comparator = SORT_COMPARATORS[field]
-                if (comparator) {
-                    mails = [...mails].sort(comparator)
-                    if (dir === 'desc') mails.reverse()
-                }
+            const comparator = SORT_COMPARATORS[sortBy || (folder === 'draft' ? 'createdAt' : 'sentAt')]
+            if (comparator) {
+                const dir = sortBy ? (+sortDir || -1) : -1
+                mails = [...mails].sort((a, b) => comparator(a, b) * dir)
             }
             return mails
         })
