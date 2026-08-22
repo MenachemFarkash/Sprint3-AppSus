@@ -9,6 +9,7 @@ import { MailCompose } from '../cmps/MailCompose.jsx'
 import { MailDetails } from '../cmps/MailDetails.jsx'
 import { MailList } from '../cmps/MailList.jsx'
 import { useUnreadCounts } from '../hooks/useUnreadCounts.js'
+import { noteService } from '../../note/services/note.service.js'
 
 const { useState, useEffect } = React
 const { useParams } = ReactRouter
@@ -48,6 +49,10 @@ export function MailIndex() {
   function loadAllMails() {
     return mailService.query({})
       .then(setAllMails)
+      .catch((err) => {
+        showErrorMsg('Error loading mails')
+        console.log(err)
+      })
   }
 
   // Update specific mail property, and re-render MailIndex accordingly
@@ -80,7 +85,7 @@ export function MailIndex() {
       .then(loadAllMails)
       .catch((err) => {
         console.log(err)
-        showErrorMsg(`Could update mail ${mailId}`)
+        showErrorMsg('Failed to update mail')
         applyMail(mail, false)
       })
   }
@@ -98,7 +103,7 @@ export function MailIndex() {
         .then(loadAllMails)
         .catch((err) => {
           console.log(err)
-          showErrorMsg(`Could not delete mail ${mailId}`)
+          showErrorMsg('Failed to delete mail')
           loadMails()
         })
     }
@@ -124,6 +129,29 @@ export function MailIndex() {
     loadAllMails()
   }
 
+  function onSaveAsNote(mail) {
+    const note = {
+      ...noteService.getEmptyNote(),
+      id: undefined,
+      title: mail.subject,
+      createdAt: mail.createdAt,
+      elements: [
+        { type: 'h1', txt: mail.subject, isBald: true, isItalic: false, isUnderline: false },
+        { type: 'p', txt: mail.body, isBald: false, isItalic: false, isUnderline: false },
+      ],
+    }
+
+    noteService.save(note)
+      .then(() => {
+        showSuccessMsg('Note created from mail')
+        navigate('/note')
+      })
+      .catch(err => {
+        console.log(err)
+        showErrorMsg('Failed to save note')
+      })
+  }
+
   const isDraftCompose = folderType === 'draft' && Boolean(mailId)
 
   return (
@@ -136,8 +164,8 @@ export function MailIndex() {
       </button>
 
       {mailId && !isDraftCompose
-        ? <MailDetails onUpdateMail={onUpdateMail} onDeleteMail={onDeleteMail} />
-        : <MailList mails={mails} onUpdateMail={onUpdateMail} onDeleteMail={onDeleteMail} />
+        ? <MailDetails onUpdateMail={onUpdateMail} onDeleteMail={onDeleteMail} onSaveAsNote={onSaveAsNote} />
+        : <MailList mails={mails} onUpdateMail={onUpdateMail} onDeleteMail={onDeleteMail} onSaveAsNote={onSaveAsNote} />
       }
 
       {(isComposing || isDraftCompose) &&

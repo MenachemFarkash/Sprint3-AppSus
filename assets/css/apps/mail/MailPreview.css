@@ -27,14 +27,6 @@
     .btn-star {
         opacity: 1;
     }
-
-    .received-at {
-        display: none;
-    }
-
-    .hover-actions {
-        display: flex;
-    }
 }
 
 .btn-star {
@@ -99,8 +91,20 @@
     display: flex;
 }
 
+.hover-actions {
+    display: none;
+}
+
 @media (min-width: 651px) {
     .mail-preview .sender-avatar {
+        display: none;
+    }
+
+    .mail-preview:hover .hover-actions {
+        display: flex;
+    }
+
+    .mail-preview:hover .received-at {
         display: none;
     }
 }

@@ -1,5 +1,6 @@
 import { mailService } from '../services/mail.service.js'
 import { LOGGED_USER_FULLNAME } from '../../../services/user.service.js'
+import { showErrorMsg, showSuccessMsg } from '../../../services/event-bus.service.js'
 
 const { useState, useEffect, useRef } = React
 
@@ -49,7 +50,9 @@ export function MailCompose({ mailId, onClose, onMailSave }) {
       mailService.remove(currMail.id).then(() => {
         draftRef.current = { mail: { ...draftRef.current.mail, id: null }, snapshot: null }
         onMailSaveRef.current()
-      }).finally(() => { statusRef.current = 'idle' })
+      })
+      .catch(err => console.log(err))
+      .finally(() => { statusRef.current = 'idle' })
       return
     }
 
@@ -61,7 +64,9 @@ export function MailCompose({ mailId, onClose, onMailSave }) {
       draftRef.current = { mail: { ...draftRef.current.mail, id: savedMail.id }, snapshot: JSON.stringify(savedMail) }
       setMail(draftRef.current.mail)
       onMailSaveRef.current()
-    }).finally(() => { statusRef.current = 'idle' })
+    })
+    .catch(err => console.log(err))
+    .finally(() => { statusRef.current = 'idle' })
   }
 
   function handleChange({ target }) {
@@ -83,6 +88,11 @@ export function MailCompose({ mailId, onClose, onMailSave }) {
     mailService.save(sentMail).then(() => {
       onMailSaveRef.current()
       onClose()
+      showSuccessMsg('Mail sent')
+    })
+    .catch(err => {
+      console.log(err)
+      showErrorMsg('Failed to send mail')
     })
   }
 
@@ -92,6 +102,10 @@ export function MailCompose({ mailId, onClose, onMailSave }) {
     mailService.remove(draftRef.current.mail.id).then(() => {
       onMailSaveRef.current()
       onClose()
+    })
+    .catch(err => {
+      console.log(err)
+      showErrorMsg('Failed to delete draft')
     })
   }
 

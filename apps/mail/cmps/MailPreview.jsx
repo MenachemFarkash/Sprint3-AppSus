@@ -6,7 +6,7 @@ const { useEffect } = React
 const { useParams } = ReactRouter
 const { useNavigate } = ReactRouterDOM
 
-export function MailPreview({ mail, onUpdateMail, onDeleteMail }) {
+export function MailPreview({ mail, onUpdateMail, onDeleteMail, onSaveAsNote }) {
   const { type: folderType } = useParams()
   const navigate = useNavigate()
 
@@ -27,7 +27,7 @@ export function MailPreview({ mail, onUpdateMail, onDeleteMail }) {
 
   function handleSaveAsNote(ev) {
     ev.stopPropagation()
-    // TODO: Integrate with Notes
+    onSaveAsNote(mail)
   }
   
   function handleDeleteMail(ev) {
