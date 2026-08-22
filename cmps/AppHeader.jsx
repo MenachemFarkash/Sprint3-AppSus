@@ -14,12 +14,18 @@ export function AppHeader() {
 
     const { hasFolderNav, txtToFilterBy, filterByToTxt, advancedFilterFields } = APP_CONFIG[currApp] || {}
 
+    const pathSegments = pathname.split('/').filter(Boolean)
+    const folderType = pathSegments[2]
+    const mailId = pathSegments[3]
+    
+    const isMailDetails = (currApp === 'mail') && Boolean(mailId) && (folderType !== 'draft')
+
     function toggleFolderNav() {
         eventBusService.emit('toggle-folder-nav')
     }
 
     return (
-        <header className="app-header">
+        <header className={`app-header ${isMailDetails ? 'mail-details-open' : ''}`}>
             {hasFolderNav &&
                 <button
                     className="folder-nav-toggle round-btn"
