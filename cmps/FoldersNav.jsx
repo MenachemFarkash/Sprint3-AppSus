@@ -4,9 +4,7 @@ import { FolderNavItem } from './FolderNavItem.jsx'
 const { useState, useEffect } = React
 const { useParams } = ReactRouter
 
-// TODO: Click on compose should trigger a new mail creation
-
-export function FoldersNav({ app, folders, unreadCounts = {} }) {
+export function FoldersNav({ app, folders, unreadCounts = {}, onCompose }) {
   const { type: folderType } = useParams()
   const [isNavOpen, setIsNavOpen] = useState(false)
 
@@ -17,7 +15,7 @@ export function FoldersNav({ app, folders, unreadCounts = {} }) {
   return (
     <div className={`folders-nav ${isNavOpen ? 'selected' : ''}`}>
       {app === 'mail' &&
-        <button className="compose-area">
+        <button className="compose-area" onClick={onCompose}>
           <div className="compose"><i className="fa-solid fa-pencil"></i></div>
           <span className="folder-txt">Compose</span>
         </button>

@@ -32,7 +32,8 @@ export function MailPreview({ mail, onUpdateMail, onDeleteMail }) {
     onDeleteMail(mailId)
   }
   
-  const { body, createdAt, id: mailId, isRead, isStarred, name, subject } = mail
+  const { body, createdAt, id: mailId, isRead, isStarred, name, sentAt, subject } = mail
+  const isDraft = !sentAt
 
   return (
     <li
@@ -46,21 +47,29 @@ export function MailPreview({ mail, onUpdateMail, onDeleteMail }) {
         <i className="fa-solid fa-star icon-star-solid"></i>
         <i className="fa-regular fa-star icon-star-regular"></i>
       </button>
-      <p className={`sender-name ${isRead ? '' : 'bold-txt'}`}>{name}</p>
+
+      <p className={`sender-name ${isRead ? '' : 'bold-txt'} ${isDraft ? 'draft-label' : ''}`}>
+        {isDraft ? 'Draft' : name}
+      </p>
+
       <p className="mail-intro">
         <span className={isRead ? '' : 'bold-txt'}>{subject}</span>
         <span> - </span>
         <span className="meta-txt">{body}</span>
       </p>
-      <p className="received-at">{utilService.getReadableDate(createdAt)}</p>
+      
+      <p className={`received-at ${isRead ? 'meta-txt' : ''}`}>{utilService.getReadableDate(createdAt)}</p>
+
       <div className="hover-actions">
         <button className={`round-btn lrg btn-mail ${isRead ? '' : 'unread'}`} onClick={handleToggleIsRead}>
           <i className="fa-regular fa-envelope icon-envelope-closed"></i>
           <i className="fa-regular fa-envelope-open icon-envelope-open"></i>
         </button>
+
         <button className="round-btn lrg btn-note" onClick={handleSaveAsNote}>
           <i className="fa-regular fa-lightbulb"></i>
         </button>
+
         <button className="round-btn lrg btn-delete" onClick={handleDeleteMail}>
           <i className="fa-regular fa-trash-can"></i>
         </button>

@@ -74,6 +74,10 @@
     padding-inline-end: .5em;
 }
 
+.sender-name.draft-label {
+    color: var(--clr-draft);
+}
+
 .mail-intro {
     white-space: nowrap;
     overflow: hidden;
