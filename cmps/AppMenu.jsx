@@ -29,10 +29,18 @@ export function AppMenu() {
             </button>
             <dialog ref={dialogRef} className="app-menu-popup" onClick={onBackdropClick}>
                 <nav>
-                    <NavLink to="/" onClick={closeAppMenu}>Home</NavLink>
-                    <NavLink to="/about" onClick={closeAppMenu}>About</NavLink>
-                    <NavLink to="/mail" onClick={closeAppMenu}>Mail</NavLink>
-                    <NavLink to="/note" onClick={closeAppMenu}>Note</NavLink>
+                    <NavLink to="/about" onClick={closeAppMenu}>
+                        <img src="../assets/icons/about.icon.png" alt="" />
+                        About
+                    </NavLink>
+                    <NavLink to="/mail" onClick={closeAppMenu}>
+                        <img src="../assets/icons/mail.icon.png" alt="" />
+                        Mail
+                    </NavLink>
+                    <NavLink to="/note" onClick={closeAppMenu}>
+                        <img src="../assets/icons/notes.icon.png" alt="" />
+                        Note
+                    </NavLink>
                 </nav>
             </dialog>
         </div>

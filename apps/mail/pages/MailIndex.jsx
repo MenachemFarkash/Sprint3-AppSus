@@ -25,6 +25,7 @@ export function MailIndex() {
   const [mails, setMails] = useState(null)
 
   useEffect(() => {
+    utilService.setFavicon('assets/icons/mail.icon.png')
     loadAllMails()
   }, [])
 
